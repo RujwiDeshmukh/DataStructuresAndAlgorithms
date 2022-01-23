@@ -35,5 +35,7 @@ public:
         }
         
         return total;
+        
+        //https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/discuss/1353644/C%2B%2B-or-Easy-Concise-or-Sliding-Window
     }
 };
