@@ -36,6 +36,9 @@ public:
             int s=q.size();
             vector<int>v;
             
+            //TC => O(n) 
+            //as we are processing all nodes of tree only once
+            
             for(int i=0;i<s;i++)
             {
                 Node *temp = q.front();
