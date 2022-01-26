@@ -12,25 +12,56 @@
 class Solution {
 public:
     
-    void preOrder(TreeNode* root,vector<int> &v)
+    void inOrder(TreeNode* root,vector<int> &v)
     {
         if(root == NULL)
         {
             return ;
         }
         
+        inOrder(root->left,v);
         v.push_back(root->val);
-        preOrder(root->left,v);
-        preOrder(root->right,v);
+        inOrder(root->right,v);
     }
     
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
       
         vector<int>v;
-        preOrder(root1,v);
-        preOrder(root2,v);
+        vector<int>tree1,tree2;
+        inOrder(root1,tree1);
+        inOrder(root2,tree2);
         
-        sort(v.begin(),v.end());
+        int n = tree1.size();
+        int m = tree2.size();
+        int i=0,j=0;
+        
+        while(i<n && j<m)
+        {
+            if(tree1[i]<=tree2[j])
+            {
+                v.push_back(tree1[i]);
+                i++;
+            }
+            else
+            {
+              v.push_back(tree2[j]);   
+              j++;
+            }
+        }
+        
+        while(i<n)
+        {
+            v.push_back(tree1[i]);
+            i++;
+        }
+        
+        while(j<m)
+        {
+            v.push_back(tree2[j]);
+            j++;
+        }
+        
+        
         return v;
     }
 };
