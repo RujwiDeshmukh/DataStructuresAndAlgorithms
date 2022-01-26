@@ -26,7 +26,10 @@ public:
        
         //if we want to choose from any of the two branches then 
         //first we will compute value and will if else condition
+
     TreeNode* left =  getTargetCopy(original->left,cloned->left,target);
+        //here itself we can check that from left if we get target value
+        //then direct return dont go to right part
     TreeNode* right =  getTargetCopy(original->right,cloned->right,target);
         
         if(left!=NULL)
