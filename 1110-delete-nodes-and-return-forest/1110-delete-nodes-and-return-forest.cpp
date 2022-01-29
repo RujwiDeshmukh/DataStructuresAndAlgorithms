@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    
+    //due to delete operation we are performing postorder traversal
     TreeNode* deleteNodes(TreeNode* root,set<int>& st,vector<TreeNode*>& ans)
     {
          if(root==NULL)
