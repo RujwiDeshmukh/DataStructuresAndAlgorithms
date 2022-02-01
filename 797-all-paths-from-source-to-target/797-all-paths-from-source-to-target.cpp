@@ -6,10 +6,7 @@ public:
     {
         if(currentNode==n-1)
         {
-            temp.push_back(currentNode);
             ans.push_back(temp);
-            //backtracking
-            temp.pop_back();
             return ;
         }
         
@@ -18,17 +15,17 @@ public:
             return ;
         }
         //add node
-        temp.push_back(currentNode);
         visited[currentNode]=1;
         
         for(int neighbour : graph[currentNode])
         {
+            temp.push_back(neighbour);
             sourceToTarget(graph,neighbour,n,visited,temp,ans);
+            temp.pop_back();
         }
         
         //here also backtrack
         visited[currentNode]=0;
-        temp.pop_back();
     }
     
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
@@ -37,6 +34,9 @@ public:
         int n = graph.size();
         vector<int>visited(n,0);
         
+        //here we are passing the source here only to handle things 
+        //more clearly
+        temp.push_back(0);
         sourceToTarget(graph,0,n,visited,temp,ans);
         return ans;
     }
