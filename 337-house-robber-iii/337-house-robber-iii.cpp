@@ -12,42 +12,38 @@
 class Solution {
 public:
     
-    int maxMoney(TreeNode* root,unordered_map<TreeNode*,int>& mp)
+    pair<int,int>maxMoney(TreeNode* root)
     {
         if(root==NULL)
         {
-            return 0;
+            return {0,0};
         }
         
-        if(mp.find(root) != mp.end())
-        {
-            return mp[root];
-        }
-       // https://leetcode.com/problems/house-robber-iii/discuss/1611899/C%2B%2B-or-with-and-without-memo-or-Detailed-explaination
-        //include the root node
-        int consider = root->val;
+        pair<int,int>left = maxMoney(root->left);
+        pair<int,int>right = maxMoney(root->right);
         
-        if(root->left != NULL)
-        {
-            consider += maxMoney(root->left->left,mp)+maxMoney(root->left->right,mp);
-        }
+    int rootHouseRobbed = root->val + left.second + right.second;
+    int rootHouseNotRobbed = max(left.first,left.second) + max(right.first,right.second);
         
-        if(root->right != NULL)
-        {
-            consider += maxMoney(root->right->left,mp)+maxMoney(root->right->right,mp);
-        }
+       /* pair<int,int>ans;
         
-        //not include that node
-        int notConsider = maxMoney(root->left,mp)+maxMoney(root->right,mp);
+        ans.first = rootHouseRobbed;
+        ans.second = rootHouseNotRobbed;
         
-        mp[root] =  max(consider,notConsider);
+        return ans;*/
         
-        return mp[root];
+        return {rootHouseRobbed, rootHouseNotRobbed};
         
     }
     
     int rob(TreeNode* root) {
-        unordered_map<TreeNode* ,int>mp;
-        return maxMoney(root,mp);
+        
+        
+        //here we are performing postorder first will move to extreme left and extreme right
+        //then will process the node
+         pair<int,int>result = maxMoney(root);
+        //first int is housRobbed, second is houseNotRobbed
+        
+        return max(result.first,result.second);
     }
 };
