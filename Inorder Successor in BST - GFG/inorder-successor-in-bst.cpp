@@ -127,6 +127,22 @@ class Solution{
             }
         }
         
+        //Code for predecesssor
+     /*   while(root != NULL)
+	{
+		if(root->val <= p->val)
+		{
+			//as current value is smaller so first save that
+			//value and then move to right
+			predeccessor = root;
+			root = root->right;
+		}
+		else
+		{
+			root = root->left;
+		}
+	}*/
+        
         return successor;
     }
 };
