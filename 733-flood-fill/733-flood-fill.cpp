@@ -1,42 +1,43 @@
 class Solution {
 public:
-    
-    void floodfill(vector<vector<int>>& image, int sr, int sc,int color,int newColor)
-    {
-        int n = image.size();
-        int m = image[0].size();
+    vector<vector<int>> floodFill(vector<vector<int>>& grid, int sr, int sc, int newColor) {
         
-        if(sr<0 || sc<0 || sc>=m || sr>= n || image[sr][sc] != color)
+        int color = grid[sr][sc];
+        queue<pair<int,int>>q;
+        
+        int n = grid.size();
+        int m = grid[0].size();
+        
+        if(grid[sr][sc]==newColor)
         {
-            return ;
+            return grid;
         }
         
-        image[sr][sc] = newColor;
+        q.push({sr,sc});
         
-        if(color != newColor)
+        while(!q.empty())
         {
-        floodfill(image,sr+1,sc,color,newColor);
-        floodfill(image,sr-1,sc,color,newColor);
-        floodfill(image,sr,sc+1,color,newColor);
-        floodfill(image,sr,sc-1,color,newColor);    
+            auto currentPair = q.front();
+            q.pop();
+            
+            int currentRow =  currentPair.first;
+            int currentCol = currentPair.second;
+            
+         if(currentRow < 0 || currentRow >= n || currentCol < 0 || currentCol >= m ||
+           grid[currentRow][currentCol] != color)
+         {
+             continue;
+         }
+            
+            grid[currentRow][currentCol] =newColor;
+            q.push({currentRow+1,currentCol});
+            q.push({currentRow-1,currentCol});
+            q.push({currentRow,currentCol-1});
+            q.push({currentRow,currentCol+1});
+            
             
         }
-    }
-    
-    
-    //TC----->O(n*m)
-    
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
         
-        int color= image[sr][sc];
-        
-        if(color == newColor)
-        {
-            return image;
-        }
-        
-        floodfill(image,sr,sc,color,newColor);
-        
-        return image;
+        return grid;
     }
 };
