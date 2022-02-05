@@ -6,86 +6,45 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
   public:
-    vector<int> max_of_subarrays(vector<int> nums, int n, int k) {
+    vector<int> max_of_subarrays(vector<int> arr, int n, int k) {
         // your code here
         
-        //it is the same the same problem as sliding window maximum
-        //here trick is we are maintaining the largest element for that 
-        //window in front the queue , removing the elements such that
-        //when the greater element encounters remove the smaller elements
-        //using deque as it allows opeartion from both front and back side
-        /*deque<int>dq;
+        int start=0;
+        int end=0;
+        deque<int>dq;
         vector<int>ans;
         
-        // we are storing indexes in the array
-        for(int i=0;i<k;i++)
+        while(end<n)
         {
-             if(!dq.empty()  && (arr[i]>arr[dq.back()]))  
-             {
-                 dq.pop_back();
-                 //removing element form back side
-             }
-             dq.push_back(i);
-        }
-        
-        //window size is reached soperforming operation
-        
-        int val = dq.front();
-        ans.push_back(arr[val]);
-        
-        for(int i=k;i<arr.size();i++)
-        {
-            //now we want to remove the starting element from array
-            while(!dq.empty() && dq.front() <= i-k)
-            {
-                //sliding window from starting
-                dq.pop_front();
-            }
-            
-            while(!dq.empty() && arr[i]>arr[dq.back()])
+            //not if as we dont at any how many smaller elements exist
+            while(!dq.empty() && arr[end]>dq.back())
             {
                 dq.pop_back();
             }
             
-            dq.push_back(i);
+            dq.push_back(arr[end]);
             
-        int val = dq.front();
-        ans.push_back(arr[val]);
-        }
-        return ans;*/
-        
-         deque<int>q;
-        vector<int>ans;
-        
-         for(int i=0;i<k;i++)
-        {
-            while(!q.empty() &&  nums[i]>nums[q.back()])
+            if(end-start+1<k)
             {
-                q.pop_back();
+                end++;
             }
-            q.push_back(i);
-        }
-        
-        for(int i=k;i<nums.size();i++)
-        {
-           int val = q.front();
-           ans.push_back(nums[val]);
-          
-            while(!q.empty() && q.front() <= i-k)
-            {
-                q.pop_front();
-            }
+            //we are maintaing the dequeue always in decreasing order
+            //as in every window we want to find largest element
             
-            while(!q.empty() &&  nums[i]>nums[q.back()])
+            else if(end-start+1==k)
             {
-                q.pop_back();
+                //perform operation as window size is encountered
+                ans.push_back(dq.front());
+                
+                if(dq.front()==arr[start])
+                {
+                    dq.pop_front();
+                }
+                
+                start++;
+                end++;
             }
-            
-            q.push_back(i);
         }
-        
-        int val = q.front();
-        ans.push_back(nums[val]);
         
         return ans;
     }
