@@ -86,7 +86,7 @@ class Solution
         
         while(currentNode != NULL)
         {
-            
+            //here we are traversing until the we reach m-1th node
             for(count=1;count<m && currentNode!=NULL;count++)
             {
                 currentNode = currentNode->next;
@@ -99,6 +99,8 @@ class Solution
             
             Node* temp = currentNode->next;
             
+            //here we have to use less than or equal to n
+            //as we want to delete n nodes 
             for(count=1;count<=n && temp!=NULL;count++)
             {
                 //struct Node* ptr = temp;
