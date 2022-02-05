@@ -12,7 +12,10 @@ public:
 	void matchPairs(char nuts[], char bolts[], int n) {
 	    // code here
 	    unordered_map<char,int>mp;
-	    map<char,int>st;
+	    //using ordered map to maintain the priority 
+	    //lets use set instead of map
+	    set<pair<char,int>>st;
+	    //map<char,int>st;
 	    //populating the map for the sake of order
 	    //in which order we that output
 	    
@@ -31,7 +34,11 @@ public:
 	        if(mp.find(nuts[i]) != mp.end())
 	        {
 	            auto it = mp.find(nuts[i]);
-	            st[it->first] = it->second;
+	           // st[it->first] = it->second;
+	           st.insert({it->first,it->second});
+	           //got know that set stores the value in the form of 
+	           //order increasing from pair it will be decide on basis
+	           //of arg having int value
 	        }
 	    }
 	    
