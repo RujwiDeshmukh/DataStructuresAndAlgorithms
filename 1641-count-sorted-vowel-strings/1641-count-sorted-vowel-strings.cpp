@@ -1,27 +1,34 @@
 class Solution {
 public:
     
-    vector<int>vowels = {'a','e','i','o','u'};
-    void countStrings(int n,char lastChar,int &count)
+    
+    void countStrings(int idx,int length,int n,int &count)
     {
-        if(n==0)
-        {
-            count++;
-            return ;
-        }
+        length++;
         
-        for(auto vowel : vowels)
-        {//as we want to generate sorted string so we are comparing it with the lastCharacter
-            if(lastChar <= vowel)
-            {
-                countStrings(n-1,vowel,count);
-            }
+          if(length==n)
+          {
+              count++;
+              return ;
+          }
+        
+         
+        for(int i=idx;i<5;i++)
+        {
+            countStrings(i,length,n,count);
         }
     }
     
     int countVowelStrings(int n) {
+        
         int count=0;
-        countStrings(n,' ',count);
+        
+        for(int i=0;i<5;i++)
+        {
+            countStrings(i,0,n,count);
+        }
+        
         return count;
+        
     }
 };
