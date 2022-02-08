@@ -8,37 +8,37 @@ class Solution {
 		string FirstNonRepeating(string A){
 		    // Code here
 		    
+		    //we can use queue here as we want remove elements from front
+		    //that can be done using queue DS easily
+		    
+		    int n = A.size();
 		    vector<int>visited(26,0);
-		    //vector array v store only unique elements
-		    vector<char>v;
+		    //queue is used to maintain the order of elements 
+		    //queue always store unique element at front
+		    queue<char>q;
 		    string ans="";
 		    
-		    for(int i=0;i<A.length();i++)
+		    for(int i=0;i<n;i++)
 		    {
-		        if(!visited[A[i]-'a'])
-		        {
-		            v.push_back(A[i]);
-		        }
+		        q.push(A[i]);
 		        
 		        visited[A[i]-'a']++;
 		        
-		        int flag=0;
-		        int m = v.size();
-		        
-		        for(int j=0;j<m;j++)
+		        while(!q.empty())
 		        {
-		       //it is unique first one then we will add them to answer string
-		            if(visited[v[j]-'a']==1)
+		            if(visited[q.front()-'a'] > 1)
 		            {
-		                flag=1;
-		                ans.push_back(v[j]);
+		                q.pop();
+		            }
+		            else
+		            {
+		                ans.push_back(q.front());
+		                //we will use break when element is found
 		                break;
 		            }
-		            //we cant write else here as we want only want to add
-		            //first non-repeating one
 		        }
 		        
-		        if(flag==0)
+		        if(q.empty())
 		        {
 		            ans.push_back('#');
 		        }
