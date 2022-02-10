@@ -11,6 +11,9 @@ public:
         
         if(vis.find(neigh)==vis.end())
         {
+            //we are returning from here bcoz we are supposed to return
+            //from that point where we cycle is detected rather than exploring a
+            //all the ways
             if(isCyclic(adj,neigh,vis,dfs))
             {
                 return true;
