@@ -5,52 +5,66 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
   public:
-  
-    bool checkCycle(int currentIndex,unordered_set<int>& vis,unordered_set<int>& st,
-    vector<int> adj[])
-    {
-          vis.insert(currentIndex);
-          st.insert(currentIndex);
-          
-          for(auto neigh : adj[currentIndex])
-          {
-              if(vis.find(neigh) == vis.end())
-              {
-                 if(checkCycle(neigh,vis,st,adj))
-                 {
-                     return true;
-                 }
-              }
-              
-              else if(st.find(neigh) != st.end())
-              {
-                  return true;
-              }
-          }
-          
-          st.erase(currentIndex);
-          return false;
-    }
-  
     // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
         // code here
+        //topological sort we are applying here
+        //if totgological sort is generated then there is no cycle
+        //and all vertices can be visited
         
-        unordered_set<int>st;
-        unordered_set<int>vis;
-         
-         for(int i=0;i<V;i++)
-         {
-             if(vis.find(i) == vis.end())
-             {
-                 if(checkCycle(i, vis, st, adj))
+        //Using BFS
+        queue<int>q;
+        vector<int>deg(V,0);
+        
+        //calculate indegree
+        for(int i=0;i<V;i++)
+        {
+            //pointing to neighbour
+            for(auto it : adj[i])
+            {
+                deg[it]++;
+            }
+        }
+        
+        
+        for(int i=0;i<V;i++)
+        {
+            if(deg[i]==0)
+            {
+                q.push(i);
+            }
+        }
+        
+        int count = 0;
+        
+        while(!q.empty())
+        {
+            auto node = q.front();
+            q.pop();
+            count++;
+            
+            for(auto neigh : adj[node])
+            {
+                 if(deg[neigh]>0)
                  {
-                     return true;
+                     deg[neigh]--;
                  }
-             }
-         }
-         
-         return false;
+                 
+                 if(deg[neigh]==0)
+                 {
+                     q.push(neigh);
+                 }
+            }
+        }
+        
+        //cout<<count<<endl;
+        
+        if(count==V)
+        {
+            return false;
+        }
+        return true;
+        
     }
 };
 
