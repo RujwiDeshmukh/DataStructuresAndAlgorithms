@@ -1,55 +1,50 @@
 class Solution {
 public:
+    
+    bool detectCycle(vector<vector<int>>& graph,int node,vector<int>& safe)
+    {
+        //mark it unSafe, when we first make the call
+        
+        safe[node]=1;
+        
+        for(auto neigh : graph[node])
+        {
+            //if it is already visited , then directly return true
+            if(safe[neigh]==1)
+            {
+                return true;
+            }
+            //if it is not visited and after some times we came to know that 
+            //from detectCycle we got true , then return true;
+            else if(safe[neigh]==0 && detectCycle(graph,neigh,safe))
+            {
+                return true;
+            }
+        }
+        
+        //backtrack i.e. mark that node as safe
+        safe[node]=2;
+        return false;
+    }
+    
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
         
         int n = graph.size();
-        vector<vector<int>>adj(n);
-        vector<int>indegree(n,0);
-        queue<int>q;
-        vector<int>ans;
-        
-        int i=0;
-        
-        for(auto &g : graph)
-        {
-            for(auto &it : g)
-            {
-                adj[it].push_back(i);
-                indegree[i]++;
-            }
-            
-            i++;
-        }
+        vector<int>safe(n,0);
+        vector<int>res;
         
         for(int i=0;i<n;i++)
         {
-            if(indegree[i]==0)
+            //it worked same as visited work in bfs
+            //if in previous cycle if the node is already marked as safe
+            //then 2nd time we will directly add it ans
+            //and wont make any calls
+            if(safe[i]==2 || detectCycle(graph,i,safe)==false)
             {
-                q.push(i);
+                res.push_back(i);
             }
         }
         
-    //    https://leetcode.com/problems/find-eventual-safe-states/discuss/1548824/Multiple-Approaches-Explained-oror-BFS-and-DFS-oror-C%2B%2B-Clean-Code
-        
-        while(!q.empty())
-        {
-            int node = q.front();
-            q.pop();
-            ans.push_back(node);
-            
-            for(auto it : adj[node])
-            {
-                indegree[it]--;
-                
-                if(indegree[it]==0)
-                {
-                    q.push(it);
-                }
-            }
-        }
-        
-        sort(ans.begin(),ans.end());
-        
-        return ans;
+        return res;
     }
 };
