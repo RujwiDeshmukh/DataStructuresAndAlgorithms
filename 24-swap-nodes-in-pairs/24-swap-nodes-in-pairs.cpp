@@ -11,36 +11,29 @@
 class Solution {
 public:
     
-    ListNode* swapNodes(ListNode* head)
+    ListNode* pairSwap(ListNode* head)
     {
-        
-        if(head==NULL)
+        if(head==NULL || head->next==NULL)
         {
             return head;
         }
         
-        ListNode* temp = head;
+        //in this question we are just changing links not updating
+        //or swapping values
         
-        int value = temp->val;
+        ListNode* firstNode = head;
+        ListNode* secondNode = head->next;
         
-        if(temp->next != NULL)
-        {
-            temp->val = temp->next->val;
-            temp->next->val=value;
-            temp = temp->next->next;
-        }
-        else
-        {
-         return NULL;   
-        }
+        ListNode* tempList = pairSwap(head->next->next);
         
-        swapNodes(temp);
+        firstNode->next = tempList;
+        secondNode->next = firstNode;
         
-        return head;
+        
+        return secondNode;
     }
     
     ListNode* swapPairs(ListNode* head) {
-          
         if(head==NULL)
         {
             return head;
@@ -51,6 +44,6 @@ public:
             return head;
         }
         
-        return swapNodes(head);
+       return pairSwap(head);
     }
 };
