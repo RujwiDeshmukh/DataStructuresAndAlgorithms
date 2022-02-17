@@ -5,7 +5,16 @@ public:
     {
         if(color[node]!=-1)
         {
-            return color[node]==currColor;
+            //return color[node]==currColor;
+            
+            if(color[node]!=currColor)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
        
         color[node]=currColor;
