@@ -4,29 +4,34 @@ public:
     //here we cannot pass vector as reference as it the vector of list
 bool isBipartite(vector<int> dislikes[],vector<int>& color,int node,int currColor)
     {
-        if(color[node]!=-1)
-        {
-            if(color[node]!=currColor)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        
+        queue<int>q;
+        q.push(node);
+        color[node]=currColor;
     
-       color[node]=currColor;
-   //  cout<<dislikes[node]<<endl;
-      for(auto neigh : dislikes[node])
-      {
-          if(isBipartite(dislikes,color,neigh,1-currColor)==false)
-          {
-              return false;
-          }
-      }
+       while(!q.empty())
+       {
+           int currNode = q.front();
+           q.pop();
+           
+           for(auto neigh : dislikes[currNode])
+           {
+               if(color[neigh] == -1)
+               {
+                   color[neigh] = 1-color[currNode];
+                   q.push(neigh);
+               }
+               else if(color[neigh]!=-1)
+               {
+                   if(color[neigh]==color[currNode])
+                   {
+                       return false;
+                   }
+               }
+           }
+       }
     
-      return true;
+       return true;
     
     }
     
