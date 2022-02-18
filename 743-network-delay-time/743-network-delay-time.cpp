@@ -1,20 +1,19 @@
 class Solution {
 public:
     
-    int minTime(vector<pair<int,int>>graph[],int n,int src)
+    int minTime(vector<pair<int,int>> graph[], int src,vector<int>& dist)
     {
-        vector<int>dist(n+1,INT_MAX);
-        int time=0;
-        
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         pq.push({0,src});
+        //src distance should be zero from itself
         dist[src]=0;
-        cout<<src<<endl;
+        int ans=0;
         
         while(!pq.empty())
         {
             auto pr = pq.top();
             pq.pop();
+            
             int node = pr.second;
             
             for(auto neigh : graph[node])
@@ -28,33 +27,27 @@ public:
                     pq.push({dist[nextNode],nextNode});
                 }
             }
-            
         }
         
-        time = *max_element(dist.begin()+1,dist.end());
+         ans = *max_element(dist.begin()+1,dist.end());
         
-       return time==INT_MAX ? -1 : time;
-        
+        return ans==INT_MAX ? -1 : ans;
     }
-    
-   // https://leetcode.com/problems/network-delay-time/discuss/1756203/Easy-C%2B%2B-Solution-or-Dijkstras-Algo-or-Explained
     
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         
         vector<pair<int,int>>graph[n+1];
-        
+        vector<int>dist(n+1,INT_MAX);
         for(int i=0;i<times.size();i++)
         {
             vector<int>temp = times[i];
-            
             int src = temp[0];
             int dest = temp[1];
             int wt = temp[2];
             
             graph[src].push_back({dest,wt});
         }
-    
         
-      return  minTime(graph,n,k);
+       return minTime(graph,k,dist);
     }
 };
