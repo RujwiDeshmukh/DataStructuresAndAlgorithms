@@ -16,13 +16,13 @@ public:
             }
             //here as we are stating from 1 index i.e. i=1 so
             //i will increment first so we have to erase i-1
+            cout<<i<<endl;
             num.erase(i,1);
             k--;
         }
         
         //checking for the leading zeros
         
-        cout<<num.size()<<endl;
         
         int i=0;
         
