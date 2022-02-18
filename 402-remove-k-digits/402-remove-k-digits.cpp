@@ -34,6 +34,8 @@ public:
             i++;
         }
         
+        //all elemnts in decreasing or equal order
+        //or k elemnts are not removed as conditions are not valid
         while(k>0 && !st.empty())
         {
             k--;
