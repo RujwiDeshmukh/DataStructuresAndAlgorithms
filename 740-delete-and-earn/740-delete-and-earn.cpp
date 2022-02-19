@@ -19,6 +19,8 @@ public:
         return dp[idx] = max(notConsider,consider);
     }
     
+    //https://leetcode.com/problems/delete-and-earn/discuss/1588157/House-Robber-or-C%2B%2B-or-Memoization
+    
     int deleteAndEarn(vector<int>& nums) {
         
         vector<int>count(10001,0);
