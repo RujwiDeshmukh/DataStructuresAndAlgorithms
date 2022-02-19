@@ -11,7 +11,7 @@ public:
         int length=1;
         
         set<string>s(wordList.begin(),wordList.end());
-        
+        //https://leetcode.com/problems/word-ladder/discuss/898086/Easy-BFS-in-C%2B%2B-with-explanation-%3A-
         queue<string>q;
         q.push(beginWord);
         
