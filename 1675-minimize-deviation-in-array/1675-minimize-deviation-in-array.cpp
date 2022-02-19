@@ -2,31 +2,34 @@ class Solution {
 public:
     int minimumDeviation(vector<int>& nums) {
         
-        set<int>st;
-        st.insert(nums.begin(),nums.end());
-        //deviation is diff betn max and min element in array
-        int min_dev = (*st.rbegin() - *st.begin());
+        priority_queue<int>pq;
+        int minEle = INT_MAX;
         
-        int val = *st.begin();
-        //maximize odd
-        while(val%2==1)
+        //finding the minimum element minEle
+       for(auto num : nums)
+       {
+           if(num%2==1)
+           {
+               num *= 2;
+           }
+           minEle = min(minEle,num);
+           pq.push(num);
+       }
+        
+        int minDev = INT_MAX;
+        
+        //reducing the maximum value here
+        //last operation is remaining due to this condition
+        while(pq.top()%2 == 0)
         {
-            st.erase(val);
-            st.insert(val*2);
-            val = *st.begin();
-            min_dev = min(min_dev, *st.rbegin()-val);
+            int maxi = pq.top();
+            cout<<maxi<<endl;
+            pq.pop();
+            minDev = min(minDev,maxi-minEle);
+             minEle = min(minEle , maxi/2);
+            pq.push(maxi/2);
         }
         
-        val = *st.rbegin();
-          //minimize even
-        while(val%2==0)
-        {
-            st.erase(val);
-            st.insert(val/2);
-            val = *st.rbegin();
-            min_dev = min(min_dev, val-*st.begin());
-        }
-        
-      return min_dev;
+        return min(minDev, pq.top()-minEle);
     }
 };
