@@ -16,7 +16,7 @@ public:
                 count--;
             }
             
-            if(count <= 0)
+            if(count == 0)
             {
                 ele=nums[i];
                 count=1;
