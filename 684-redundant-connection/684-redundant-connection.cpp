@@ -1,24 +1,63 @@
 class Solution {
 public:
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int n = edges.size();
-	vector<int>graph[n+1];
-	vector<bool> vis(n+1);                
-	for(auto& E : edges) {
-        fill(begin(vis), end(vis), false);     // reset the vis array
-        graph[E[0]].push_back(E[1]), 
-        graph[E[1]].push_back(E[0]);
-        if(dfs(graph, vis, E[0])) return E;
-    }
-	return { };    // un-reachable
-}
     
-bool dfs(vector<int> graph[], vector<bool>& vis, int cur, int par = -1) {
-    if(vis[cur]) return true;    // reached already visited node -  cycle detected
-    vis[cur] = true;
-    for(auto child : graph[cur]) 
-        if(child != par && dfs(graph, vis, child, cur)) return true;
-    return false;    // no cycle found
-}
-
+    int findParent(vector<int>& parent,int node)
+    {
+        if(parent[node]==node)
+        {
+            return node;
+        }
+        
+        int temp = findParent(parent,parent[node]);
+        parent[node]=temp;
+        return temp;
+    }
+    
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        
+        int n = edges.size();
+        
+        vector<int>parent(n+1);
+        vector<int>rank(n+1);
+        
+        for(int i=0;i<=n;i++)
+        {
+            parent[i]=i;
+            rank[i]=1;
+        }
+        
+        for(vector<int> &e : edges)
+        {
+            int src = e[0];
+            int dest = e[1];
+            
+            int parentSrc = findParent(parent,src);
+            int parentDest = findParent(parent,dest);
+            
+            cout<<parentSrc<<endl;
+            cout<<parentDest<<endl;
+            
+            if(parentSrc!=parentDest)
+            {
+                if(rank[parentSrc] > rank[parentDest])
+                {
+                    parent[parentDest] = parentSrc; 
+                }
+                else if(rank[parentSrc] < rank[parentDest])
+                {
+                   parent[parentSrc] = parentDest;    
+                }
+                else
+                {
+                    parent[parentSrc] = parentDest;
+                    rank[parentDest]++;
+                }
+            }
+            else
+            {
+                return e;
+            }
+        }
+        return {};
+    }
 };
