@@ -1,58 +1,52 @@
 class Solution {
 public:
     
-    bool hasPath(vector<vector<int>>& equal,int src,int dest,vector<int>& vis)
+    int findParent(int node,vector<int>& parent)
     {
-        if(src==dest)
+        if(parent[node]==node)
         {
-            return true;
+            return node;
         }
         
-        vis[src]=1;
-        
-        for(auto it : equal[src])
-        {
-            if(vis[it]==0)
-            {
-                if(hasPath(equal,it,dest,vis))
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
+        int temp = findParent(parent[node],parent);
+        parent[node]=temp;
+        return parent[node];
     }
     
     bool equationsPossible(vector<string>& equations) {
         
-        vector<vector<int>>equal(26);
-        //only 26 lower case characters are present we are taking size as 26
+        //https://leetcode.com/problems/satisfiability-of-equality-       equations/discuss/234486/JavaC%2B%2BPython-Easy-Union-Find
         
-        //created the graph between i.e. edge created between the edges having sign =
-        for(auto & eq : equations)
+        vector<int>parent(27);
+         
+        for(int i=0;i<26;i++)
+        {
+            parent[i]=i;
+        }
+        
+        for(auto eq : equations)
         {
             if(eq[1] == '=')
             {
-                equal[eq[0]-'a'].push_back(eq[3]-'a');
-                equal[eq[3]-'a'].push_back(eq[0]-'a');
+                int x = findParent(eq[0]-'a',parent);
+                int y = findParent(eq[3]-'a',parent);
+                parent[x]=y;
             }
         }
         
-        //if we found the path betwwen the edge having sign ! , then it contradicts the situation
-        
-        for(auto & eq : equations)
+         for(auto eq : equations)
         {
-            if(eq[1]== '!')
+            if(eq[1] == '!')
             {
-                vector<int>vis(26,0);
-                if(hasPath(equal,eq[0]-'a',eq[3]-'a',vis))
+                int x = findParent(eq[0]-'a',parent);
+                int y = findParent(eq[3]-'a',parent);
+                
+                if(x==y)
                 {
                     return false;
                 }
             }
         }
-        
         return true;
     }
 };
