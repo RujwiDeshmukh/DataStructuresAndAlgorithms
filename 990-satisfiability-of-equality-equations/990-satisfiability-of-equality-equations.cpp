@@ -29,6 +29,7 @@ public:
         vector<vector<int>>equal(26);
         //only 26 lower case characters are present we are taking size as 26
         
+        //created the graph between i.e. edge created between the edges having sign =
         for(auto & eq : equations)
         {
             if(eq[1] == '=')
@@ -37,6 +38,8 @@ public:
                 equal[eq[3]-'a'].push_back(eq[0]-'a');
             }
         }
+        
+        //if we found the path betwwen the edge having sign ! , then it contradicts the situation
         
         for(auto & eq : equations)
         {
