@@ -1,26 +1,38 @@
 class Solution {
 public:
     
-    void dfs(int row,int col,int m,int n,vector<vector<int>>& grid1,vector<vector<int>>& grid2,bool & res)
+    void bfs(int row,int col,int m,int n,vector<vector<int>>& grid1,vector<vector<int>>& grid2,bool & res)
     {
-         if(row<0 || col<0 || row>=m || col>=n || grid2[row][col]!=1)
-         {
-             return;
-         }
+        queue<pair<int,int>>q;
+        q.push({row,col});
         
-         if(grid1[row][col]==0)
-         {
-             res=false;
-             return ;
-         }
-        
-        //marking the cells of grid as visited
-        grid2[row][col]=0;
-        
-        dfs(row+1,col,m,n,grid1,grid2,res);
-        dfs(row-1,col,m,n,grid1,grid2,res);
-        dfs(row,col+1,m,n,grid1,grid2,res);
-        dfs(row,col-1,m,n,grid1,grid2,res);
+        while(!q.empty())
+        {
+            auto pr = q.front();
+            q.pop();
+            
+            int currRow = pr.first;
+            int currCol = pr.second;
+            
+if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid2[currRow][currCol]!=1)
+    {
+        continue;
+    }
+            
+            if(grid1[currRow][currCol]==0)
+            {
+                res=false;
+            }
+            
+            //mark it as visited
+            grid2[currRow][currCol]=0;
+            
+            q.push({currRow+1,currCol});
+            q.push({currRow-1,currCol});
+            q.push({currRow,currCol+1});
+            q.push({currRow,currCol-1});
+            
+        }
     }
     
     int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
@@ -38,7 +50,7 @@ public:
                  {
                      //have to initialize it every time, otherwise it will retain its value
                       res=true;
-                     dfs(i,j,m,n,grid1,grid2,res);
+                     bfs(i,j,m,n,grid1,grid2,res);
                      if(res)
                      {
                          islands++;
