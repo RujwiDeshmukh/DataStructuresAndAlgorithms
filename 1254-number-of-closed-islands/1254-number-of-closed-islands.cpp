@@ -1,20 +1,43 @@
 class Solution {
 public:
     
-    void dfs(vector<vector<int>>& grid,int currRow,int currCol,int m,int n)
+    void bfs(vector<vector<int>>& grid,int currRow,int currCol,int m,int n)
     {
         
-if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][currCol]==1)
-{
-    return;
-}
-        
+        queue<pair<int,int>>q;
+        q.push({currRow,currCol});
         grid[currRow][currCol]=1;
-        dfs(grid,currRow+1,currCol,m,n);
-        dfs(grid,currRow-1,currCol,m,n);
-        dfs(grid,currRow,currCol+1,m,n);
-        dfs(grid,currRow,currCol-1,m,n);
         
+        while(!q.empty())
+        {
+            auto pr = q.front();
+            q.pop();
+            
+            int row = pr.first;
+            int col = pr.second;
+            
+    if(row+1 >= 0 && row+1 < m && col >= 0 && col < n && grid[row+1][col]==0 )
+    {
+        q.push({row+1,col});
+        grid[row+1][col]=1;
+    }
+       if(row-1 >= 0 && row-1 < m && col >= 0 && col < n && grid[row-1][col]==0 )
+    {
+        q.push({row-1,col});
+        grid[row-1][col]=1;
+    }
+    if(row >= 0 && row < m && col+1 >= 0 && col+1 < n && grid[row][col+1]==0 )
+    {
+        q.push({row,col+1});
+        grid[row][col+1]=1;
+    }
+    if(row >= 0 && row < m && col-1 >= 0 && col-1 < n && grid[row][col-1]==0 )
+    {
+        q.push({row,col-1});
+        grid[row][col-1]=1;
+    }
+            
+        }
     }
     
     
@@ -34,7 +57,7 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
         {
             if(grid[i][0]==0)
             {
-                dfs(grid,i,0,m,n);
+                bfs(grid,i,0,m,n);
             }
             
             if(grid[i][n-1]==0)
@@ -42,7 +65,7 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
                 //we are implementing dfs here to make all the connecting zeros to 
                 //border zeros as visited
                 //
-                dfs(grid,i,n-1,m,n);
+                bfs(grid,i,n-1,m,n);
             }
         }
         
@@ -50,7 +73,7 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
         {
             if(grid[0][i]==0)
             {
-                dfs(grid,0,i,m,n);
+                bfs(grid,0,i,m,n);
             }
             
             if(grid[m-1][i]==0)
@@ -58,7 +81,7 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
                 //we are implementing dfs here to make all the connecting zeros to 
                 //border zeros as visited
                 //
-                dfs(grid,m-1,i,m,n);
+                bfs(grid,m-1,i,m,n);
             }
         }
         
@@ -70,7 +93,7 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
             {
                 if(grid[i][j]==0)
                 {
-                    dfs(grid,i,j,m,n);
+                    bfs(grid,i,j,m,n);
                     count++;
                     cout<<count<<endl;
                 }
