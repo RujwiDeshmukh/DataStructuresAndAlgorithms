@@ -35,7 +35,7 @@ public:
             
         //check for all the adjacent nodes of that particular if it has already
         //colored if yes then eliminating that colors which are already used
-            
+            //this is used for creating the set of avialable colors
             for(int j : graph[i])
             {
                 if(result[j-1] != -1)
