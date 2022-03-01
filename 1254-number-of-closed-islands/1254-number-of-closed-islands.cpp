@@ -27,6 +27,9 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid[currRow][c
         //Updating the corner 0s as we know that
         //corner zeros cant be included into close island
         
+        //excluding the zeros groups of the corner
+        //will account only intermediate one
+        
         for(int i=0;i<m;i++)
         {
             if(grid[i][0]==0)
