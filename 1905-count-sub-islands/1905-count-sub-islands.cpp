@@ -5,19 +5,21 @@ public:
     {
         queue<pair<int,int>>q;
         q.push({row,col});
+        grid2[row][col]=0;
         
         while(!q.empty())
         {
             auto pr = q.front();
             q.pop();
+        
             
             int currRow = pr.first;
             int currCol = pr.second;
             
-if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid2[currRow][currCol]!=1)
+/*if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid2[currRow][currCol]!=1)
     {
         continue;
-    }
+    }*/
             
             if(grid1[currRow][currCol]==0)
             {
@@ -25,13 +27,29 @@ if(currRow < 0 || currRow >= m || currCol < 0 || currCol >= n || grid2[currRow][
             }
             
             //mark it as visited
-            grid2[currRow][currCol]=0;
+            //grid2[currRow][currCol]=0;
             
-            q.push({currRow+1,currCol});
-            q.push({currRow-1,currCol});
-            q.push({currRow,currCol+1});
-            q.push({currRow,currCol-1});
-            
+  if(currRow+1 >= 0 && currRow+1 < m && currCol >= 0 && currCol < n && grid2[currRow+1][currCol]==1)
+    {
+        q.push({currRow+1,currCol});
+       grid2[currRow+1][currCol]=0;
+    }
+if(currRow-1 >= 0 && currRow-1 < m && currCol >= 0 && currCol < n && grid2[currRow-1][currCol]==1)
+    {
+        q.push({currRow-1,currCol});
+        grid2[currRow-1][currCol]=0;
+    }
+if(currRow >= 0 && currRow < m && currCol+1 >= 0 && currCol+1 < n && grid2[currRow][currCol+1]==1)
+    {
+        q.push({currRow,currCol+1});
+     grid2[currRow][currCol+1]=0;
+    }
+if(currRow >= 0 && currRow < m && currCol-1 >= 0 && currCol-1 < n && grid2[currRow]
+   [currCol-1]==1)
+    {
+        q.push({currRow,currCol-1});
+     grid2[currRow][currCol-1]=0;
+    }       
         }
     }
     
