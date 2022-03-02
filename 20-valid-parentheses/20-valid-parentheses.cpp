@@ -17,22 +17,20 @@ public:
                 {
                     return false;
                 }
-                else if(st.top()=='(' && currChar==')')
-                {
-                    st.pop();
-                }
-                else if(st.top()=='[' && currChar==']')
-                {
-                    st.pop();
-                }
-                else if(st.top()=='{' && currChar=='}')
-                {
-                    st.pop();
-                }
-                else
+                else if(st.top()=='(' && currChar!=')')
                 {
                     return false;
                 }
+                else if(st.top()=='[' && currChar!=']')
+                {
+                    return false;
+                }
+                else if(st.top()=='{' && currChar!='}')
+                {
+                    return false;
+                }
+                
+                st.pop();
             }
         }
         if(st.empty())
