@@ -1,34 +1,38 @@
 class MinStack {
 public:
-    
-    vector<pair<int,int>>s;
-    MinStack() {
-        
-    }
-    
-    void push(int val) {
-        if(s.empty())
-        {
-            s.push_back({val,val});
+    struct Node{
+        int val, mn;
+        Node* next;
+        Node(int _val, int _mn, Node*_next = NULL){
+            val = _val;
+            mn = _mn;
+            next = _next;
         }
-        else
-        {
-            //checking with the last smallest element
-            //if more smaller element encountered then update the minimum value
-            s.push_back({val,min(val,s.back().second)});
+    }*head;
+    void push(int val) {
+        if(!head){
+            head = new Node(val, val);
+        } 
+        else{
+            head = new Node(val, min(val, head->mn), head);
         }
     }
     
     void pop() {
-        return s.pop_back();
+        if(!head) return ;
+        Node* temp = head;
+        head = head->next;
+        delete(temp);
     }
     
     int top() {
-        return s.back().first;
+        if(!head) return -1;
+        return head->val;
     }
     
     int getMin() {
-        return s.back().second;
+        if(!head) return -1;
+        return head->mn;
     }
 };
 
