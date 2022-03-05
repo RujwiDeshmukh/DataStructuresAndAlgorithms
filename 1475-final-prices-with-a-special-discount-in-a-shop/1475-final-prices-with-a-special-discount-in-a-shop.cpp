@@ -3,27 +3,24 @@ public:
     vector<int> finalPrices(vector<int>& prices) {
         
         int n = prices.size();
-        vector<int>discount;
+        stack<int>st;
         
         for(int i=0;i<n;i++)
         {
-            int flag=1;
-            for(int j=i+1;j<n;j++)
+            //here we are maintaining the stack such that until first smaller element
+            //encounters,once the element is encountered then we will pop the larger 
+            //elements than the current elements so while loop is used
+            //we are putting index in stack as we want to reduce the array value
+            //so that we can access the array element using index
+            while(!st.empty() && prices[st.top()] >= prices[i])
             {
-                 if(prices[j] <= prices[i])
-                 {
-                     discount.push_back(prices[i]-prices[j]);
-                     flag=0;
-                     break;
-                 }
+                prices[st.top()] -= prices[i];
+                st.pop();
             }
             
-            if(flag)
-            {
-                discount.push_back(prices[i]);
-            }
+            st.push(i);
         }
         
-        return discount;
+        return prices;
     }
 };
