@@ -3,18 +3,22 @@ public:
     struct Node{
         int val, mn;
         Node* next;
-        Node(int _val, int _mn, Node*_next = NULL){
+        Node(int _val, int _mn){
             val = _val;
             mn = _mn;
-            next = _next;
+            next = NULL;
         }
-    }*head;
+    };
+    
+    Node* head=NULL;
     void push(int val) {
         if(!head){
             head = new Node(val, val);
         } 
         else{
-            head = new Node(val, min(val, head->mn), head);
+            Node* temp = new Node(val, min(val, head->mn));
+            temp->next=head;
+            head=temp;
         }
     }
     
