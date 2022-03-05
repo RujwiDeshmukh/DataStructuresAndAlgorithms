@@ -37,6 +37,7 @@ public:
     int getMin() {
         if(!head) return -1;
         return head->mn;
+     //   https://leetcode.com/problems/min-stack/discuss/730013/3-approaches-(Two-stack-Only-One-Stack-and-linked-list)
     }
 };
 
