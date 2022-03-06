@@ -11,25 +11,27 @@ public:
         
 //https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/discuss/1390811/Clear-Explanation-oror-C%2ACB%2B-oror-Greedy-oror-Detailed-Explanation
         
-         stack<char>st;
         int n = s.length();
+        int stack=0;
         
         for(int i=0;i<n;i++)
         {
             if(s[i]=='[')
             {
-                st.push(s[i]);
+                stack++;
             }
             else
             {
-               if(!st.empty() && s[i]==']') 
+                //only we will reduce if we have the opening the bracket
+                //so we are checking this condition
+               if(stack > 0 ) 
                {
-                   st.pop();
+                   stack--;
                }
             }
         }
         
-        return (st.size()+1)/2;
+        return (stack+1)/2;
         
     }
 };
