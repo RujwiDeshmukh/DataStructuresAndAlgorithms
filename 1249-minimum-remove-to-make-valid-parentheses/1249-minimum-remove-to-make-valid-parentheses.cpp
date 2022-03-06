@@ -1,42 +1,49 @@
 class Solution {
 public:
     string minRemoveToMakeValid(string s) {
-        
-        //first my approach was to create stack of pair storing 
-        //opening braces and index as we want to remove that brace from string
-        
-        //as we know that we are only pushing braces to stack
-        
+     
         int n = s.length();
-        stack<int>st;
+        int count=0;
         
         for(int i=0;i<n;i++)
         {
             if(s[i]=='(')
             {
-                st.push(i);
+                count++;
             }
-            else
+            else if(s[i]==')')
             {
-                if(s[i]==')')
+                if(count==0)
                 {
-                    if(st.empty())
-                    {
-                        s[i]='#';
-                    }
-                 else
-                   {
-                    st.pop();
-                   }
-                    
+                    s[i]='#';
+                }
+                else
+                {
+                    count--;
                 }
             }
         }
         
-        while(!st.empty())
+        count=0;
+        
+        
+         for(int i=n-1;i>=0;i--)
         {
-            s[st.top()]='#';
-            st.pop();
+            if(s[i]==')')
+            {
+                count++;
+            }
+            else if(s[i]=='(')
+            {
+                if(count==0)
+                {
+                    s[i]='#';
+                }
+                else
+                {
+                    count--;
+                }
+            }
         }
         
         string ans="";
@@ -50,5 +57,7 @@ public:
         }
         
         return ans;
+        
+//https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/discuss/1073189/C%2B%2B-or-2-Approaches-or-O(n)-Beats-100-or-No-Extra-Space-(Best)-or-Explanation
     }
 };
