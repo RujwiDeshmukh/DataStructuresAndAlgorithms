@@ -11,25 +11,18 @@ class Solution
     vector<long long> nextLargerElement(vector<long long> arr, int n){
         // Your code here
         
-        stack<int>st;
-        vector<long long> nge(n,0);
-        
-        for(int i=0;i<n;i++)
+        stack<long long>st;
+        vector<long long>nge(n,0);
+        for(int i=n-1;i>=0;i--)
         {
-           while(!st.empty() && arr[i] > arr[st.top()])
-           {
-               nge[st.top()] = arr[i];
-               st.pop();   
-           }
-           //pushing index as we have to keep track of elements of array
-           //in nge array
-           st.push(i);
-        }
-        
-        while(!st.empty())
-        {
-            nge[st.top()] = -1;
-            st.pop();
+            while(!st.empty() && st.top() <= arr[i])
+            {
+                st.pop();
+            }
+            
+            nge[i] = st.empty() ? -1 : st.top();
+            
+            st.push(arr[i]);
         }
         
         return nge;
