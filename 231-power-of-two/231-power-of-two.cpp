@@ -6,18 +6,7 @@ public:
         {
             return false;
         }
-        if(n==1)
-        {
-            return true;
-        }
         
-        if(((n&(n-1))==0))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ceil(log2(n)) == floor(log2(n));
     }
 };
