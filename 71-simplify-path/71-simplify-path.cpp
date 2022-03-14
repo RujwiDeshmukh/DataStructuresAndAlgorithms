@@ -47,30 +47,18 @@ public:
         
         
         string ans = "";
-        ans += "/";
-        
-        cout<<ans<<endl;
-        
-        stack<string>st1;
         
         while(!st.empty())
         {
-            st1.push(st.top());
+            ans = "/"+st.top()+ans;
             st.pop();
         }
         
         
-        cout<<st1.size()<<endl;
-        while(st1.size() > 1)
+        if(ans.size()==0)
         {
-            ans += st1.top();
-            ans += "/";
-            st1.pop();
-        }
-        
-        if(!st1.empty())
-        {
-        ans += st1.top();
+           ans += "/";
+           return ans;
         }
         
         return ans;
