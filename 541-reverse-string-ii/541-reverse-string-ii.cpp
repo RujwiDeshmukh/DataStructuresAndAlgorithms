@@ -14,6 +14,7 @@ public:
             else if(n-i<k)
             {
                 reverse(s.begin()+i,s.end());
+                break;
             }
             else
             {
