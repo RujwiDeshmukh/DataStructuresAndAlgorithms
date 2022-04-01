@@ -1,27 +1,12 @@
 class Solution {
 public:
     string reverseStr(string s, int k) {
-        
-        int n = s.length()-1;
-        
-        for(int i=0;i<=n;i=i+2*k)
+     
+        for(int i=0;i<s.length();i+=2*k)
         {
-            if(n-i<2*k && n-i>=k)
-            {
-                reverse(s.begin()+i,s.begin()+i+k);
-                break;
-            }
-            else if(n-i<k)
-            {
-                reverse(s.begin()+i,s.end());
-                break;
-            }
-            else
-            {
-                reverse(s.begin()+i,s.begin()+i+k);
-            }
+            reverse(s.begin()+i, min(s.begin()+i+k, s.end()));
         }
         
-        return s;
+        return s; 
     }
 };
