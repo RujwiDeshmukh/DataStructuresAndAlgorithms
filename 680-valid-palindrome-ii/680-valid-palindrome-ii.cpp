@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    //https://leetcode.com/kritika_12/
     bool isPalindrome(string s,int l ,int r)
     {
         while(l<r)
