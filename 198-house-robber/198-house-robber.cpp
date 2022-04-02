@@ -1,31 +1,25 @@
 class Solution {
 public:
-    
-    int maxMoney(vector<int>& nums,int currentIndex,unordered_map<int,int>& mp)
-    {
-        if(currentIndex < 0)
-        {
-            return 0;
-        }
-        
-        int currentKey = currentIndex;
-        
-        if(mp.find(currentKey) != mp.end())
-        {
-            return mp[currentKey];
-        }
-        
-       //rob the house 
-        int rob = nums[currentIndex] + maxMoney(nums,currentIndex-2,mp);
-        //not to rob the house
-        int noRob = maxMoney(nums,currentIndex-1,mp);
-        
-        return mp[currentKey] = max(rob,noRob);
-    }
-    
     int rob(vector<int>& nums) {
-        unordered_map<int,int>mp;
-        int n= nums.size()-1;
-        return maxMoney(nums,n,mp);
+     
+        int n = nums.size();
+        
+        int dp[n+1];
+        
+        //we got to know that from recursive tree
+        dp[0] = nums[0];
+        int pick=0;
+        
+        for(int i=1;i<n;i++)
+        {
+         i > 1 ? pick = nums[i] + dp[i-2] : pick = nums[i]; //+ dp[i-2] ll be 0 as i ind is -ve;
+        
+          int notPick = dp[i-1];
+            
+         dp[i] = max(pick,notPick);
+        }
+        
+        return dp[n-1];
+        
     }
 };
