@@ -1,41 +1,43 @@
 class Solution {
 public:
     
-    int dp[101][101];
-  
-    int countPaths(int r,int c,int row,int col,vector<vector<int>> &obstacleGrid)
-    {       
-                
-       if( r == row-1 and c == col-1 &&  obstacleGrid[ r ][ c ] == 0) return 1;
+    int countPaths(vector<vector<int>>& grid,vector<vector<int>>& dp,int row,int col)
+    {
+        if(row>=0 && col>=0 && grid[row][col] == 1)
+        {
+            return 0;
+        }
         
-       if(r >= row || c >= col)
-       {
-           return 0;
-       }
+        if(row==0 && col==0)
+        {
+            return 1;
+        }
         
-        if(obstacleGrid[r][c]==1)  return 0;
-
-        if(dp[ r ][ c ] != -1 ) return dp[ r ][ c ];
-                    
-        int left = 0 , right = 0; 
+        if(row < 0 || col < 0 )
+        {
+            return 0;
+        }
         
-          left =   countPaths( r + 1 , c , row , col , obstacleGrid );
+        if(dp[row][col] != -1)
+        {
+            return dp[row][col];
+        }
         
-          right  =   countPaths( r , c + 1 , row , col , obstacleGrid );
-                
-        return dp[ r ][ c ] = left + right;
+        int up = countPaths(grid,dp,row-1,col);
+        int left = countPaths(grid,dp,row,col-1);
+        
+        return dp[row][col] = up+left;
         
     }
     
-    int uniquePathsWithObstacles( vector < vector < int > > & obstacleGrid) {
-              
-        memset( dp , -1 , sizeof( dp ));
+    
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         
         int n = obstacleGrid.size();
         int m = obstacleGrid[0].size();
-
-       return countPaths( 0 , 0 , n , m , obstacleGrid );
-       
+        
+        vector<vector<int>>dp(n, vector<int>(m,-1));
+        
+        return countPaths(obstacleGrid,dp,n-1,m-1);
     }
- 
 };
