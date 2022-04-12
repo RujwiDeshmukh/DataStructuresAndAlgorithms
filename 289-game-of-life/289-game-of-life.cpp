@@ -28,7 +28,7 @@ public:
         vector<vector<int>> tempBoard = board;
         //passing original copy every time as we are not allowed to
         //update the values in a matrix simultaneously
-        
+        //https://leetcode.com/problems/game-of-life/discuss/1225591/C%2B%2B-two-approaches-with-intuition-or-faster-than-100
         for(int i=0;i<r;i++)
         {
             for(int j=0;j<c;j++)
