@@ -1,62 +1,62 @@
 class Solution {
 public:
+    int getLiveNeighbours(int row,int col,vector<vector<int>>& board)
+    {
+          int n = board.size();
+          int m = board[0].size();
+        
+          int cnt=0;
+         
+          if(row-1 >= 0 && board[row-1][col]==1) cnt++;
+          if(row+1 < n && board[row+1][col]==1) cnt++;
+          if(col-1 >= 0 && board[row][col-1]==1) cnt++;
+          if(col+1 < m && board[row][col+1]==1) cnt++;;
+          if(row-1 >= 0 && col-1 >= 0 && board[row-1][col-1]==1) cnt++;
+          if(row-1 >= 0 && col+1 < m && board[row-1][col+1]==1) cnt++;
+          if(row+1 < n && col-1 >= 0 && board[row+1][col-1]==1) cnt++;
+          if(row+1 < n && col+1 < m && board[row+1][col+1]==1) cnt++;
+        
+        cout<<cnt<<endl;
+        return cnt;
+    }
+    
+    bool isLive(int status) {
+        return status == 1;
+    }
+    
     void gameOfLife(vector<vector<int>>& board) {
         
+        int r = board.size();
+        int c = board[0].size();
+        vector<vector<int>> tempBoard = board;
+        //passing original copy every time as we are not allowed to
+        //update the values in a matrix simultaneously
         
-         int x[8] = {0,0,1,1,1,-1,-1,-1};
-        int y[8]= {1,-1,1,0,-1,1,-1,0};
-        
-        int n = board.size();
-        int m = board[0].size();
-        
-        for(int i=0;i<n;i++)
+        for(int i=0;i<r;i++)
         {
-            for(int j=0;j<m;j++)
+            for(int j=0;j<c;j++)
             {
-                int live=0;
-                //for all the 8 directions
-                for(int k=0;k<8;k++)
+                int liveNeighbour = getLiveNeighbours(i,j,tempBoard);
+                
+                if(isLive(board[i][j]))
                 {
-                    int row = x[k]+i;
-                    int col = y[k]+j;
-      
-                    //as we are not updating cells simultaneously we have marked live cells as -1 so need to consider that situation for counting live cells
-     if(row>=0 && row<n && col>=0 && col<m && (board[row][col]==1 || board[row][col]==-1))
+                    if((liveNeighbour<2) || (liveNeighbour>3))
                     {
-                        live++;
+                        board[i][j]=0;
                     }
                 }
-                    
-                     if(board[i][j]==1 && ((live<2) || (live>3)))
-                     {
-                         //if condition is true then mark it as dead situation
-                         board[i][j]=-1;
-                     }
-                     /*else if(board[i][j]==1 && ((live==2) || (live==3)))
-                     {
-                         board[i][j]=1;
-                     }*/
-                    else if(board[i][j]==0 && (live==3))
+                else
+                {
+                   if(liveNeighbour == 3)
+                   {
+                       board[i][j] = 1;
+                   }
+                    else
                     {
-                        board[i][j]=2;
+                        board[i][j]=0;
                     }
                 }
-            }
-    
-    
-    for(int i=0;i<n;i++)
-    {
-        for(int j=0;j<m;j++)
-        {
-            if(board[i][j]==-1)
-            {
-               board[i][j]=0; 
-            }
-            else if(board[i][j]==2)
-            {
-                board[i][j]=1;
             }
         }
-    }
     }
 };
