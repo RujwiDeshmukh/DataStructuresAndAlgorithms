@@ -20,9 +20,6 @@ public:
         return cnt;
     }
     
-    bool isLive(int status) {
-        return status == 1;
-    }
     
     void gameOfLife(vector<vector<int>>& board) {
         
@@ -38,7 +35,7 @@ public:
             {
                 int liveNeighbour = getLiveNeighbours(i,j,tempBoard);
                 
-                if(isLive(board[i][j]))
+                if(board[i][j]==1)
                 {
                     if((liveNeighbour<2) || (liveNeighbour>3))
                     {
@@ -51,10 +48,6 @@ public:
                    {
                        board[i][j] = 1;
                    }
-                    else
-                    {
-                        board[i][j]=0;
-                    }
                 }
             }
         }
