@@ -32,10 +32,10 @@ public:
                          //if condition is true then mark it as dead situation
                          board[i][j]=-1;
                      }
-                     else if(board[i][j]==1 && ((live==2) || (live==3)))
+                     /*else if(board[i][j]==1 && ((live==2) || (live==3)))
                      {
                          board[i][j]=1;
-                     }
+                     }*/
                     else if(board[i][j]==0 && (live==3))
                     {
                         board[i][j]=2;
