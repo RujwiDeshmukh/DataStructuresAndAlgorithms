@@ -76,14 +76,18 @@ public:
         
         //as we know the base case is n-1, the looping will start from n-2 position
         
+        //for changing row
         for(int i=n-2;i>=0;i--)
         {
+            //for changing column for robot 1
             for(int j1=0;j1<m;j1++)
             {
+                //for changing column for robot 3
                 for(int j2=0;j2<m;j2++)
                 {
                       
                      int maxi = -1e9+8;
+                    //for loops for the 9 possible combinations of 2 robots
         for(int dj1=-1;dj1<=1;dj1++)
         {
             for(int dj2=-1;dj2<=1;dj2++)
@@ -99,7 +103,7 @@ public:
          //maxi = max(maxi, grid[r][c1]+grid[r][c2]+maxCherries(grid,n,m,r+1,c1+dj1,c2+dj2));
                     value += grid[i][j1]+grid[i][j2];
                 }
-                
+                //check this out of bound condition always
                 if(j1+dj1 >=0 && j1+dj1 < m && j2+dj2 >= 0 && j2+dj2 < m)
                    value += dp[i+1][j1+dj1][j2+dj2];
                 else
@@ -114,5 +118,7 @@ public:
         }
         
         return dp[0][0][m-1];
+            //dp[0][0] => robot 1
+            //dp[0][m-1] => robot 2
     }
 };
