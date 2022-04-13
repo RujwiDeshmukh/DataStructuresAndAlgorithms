@@ -10,6 +10,10 @@ public:
         int c2=n-1;
         int val=0;
         
+        //equal condition will work for both even and odd rows and columns
+        //equal work for odd
+        //dry run to understand
+        //https://leetcode.com/problems/spiral-matrix-ii/discuss/1941068/C%2B%2B-oror-0ms-oror-100-oror-Easy-To-Understand
         while(r1<=r2 && c1<=c2)
         {
             for(int i=c1;i<=c2;i++)
@@ -21,6 +25,7 @@ public:
             {
                 matrix[i][c2] = ++val;
             }
+            
             
             for(int i=c2-1;i>c1;i--)
             {
