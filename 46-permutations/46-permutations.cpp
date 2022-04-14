@@ -1,40 +1,43 @@
 class Solution {
 public:
     
-    void recurPermute(vector<int> &ds, vector<int> &nums, vector<vector<int>> &ans, int        freq[])
+    void recurPermutate(vector<int>& nums,int n,vector<int>& ds,vector<vector<int>>& ans, vector<int>& freq)
     {
-        //base condition 
-        if(ds.size()>=nums.size())
+        if(ds.size() >= n)
         {
             ans.push_back(ds);
             return;
         }
         
-        for(int i=0;i<nums.size();i++)
+        //check for all the possibilities that we can pick
+        
+        for(int i=0;i<n;i++)
         {
             if(!freq[i])
             {
-                freq[i]=true;
+                //mark the index as visited or not from that we can infer if the element
+                //of that same index will be picked or not next time
+                freq[i]=1;
                 ds.push_back(nums[i]);
-                recurPermute(ds, nums, ans, freq);
-                //unmark it in frequency array
-                freq[i]=false;
-                //we have to remove the element as we are ds by refrence
+                //n! complexity for generating all the permutations of the given array
+                //O(n) complexity => for loop
+                recurPermutate(nums,n,ds,ans,freq);
+                //after the completion of the function call remove it from
+                //data structure and unmark it as well
                 ds.pop_back();
+                freq[i]=0;
             }
         }
+        
     }
     
-    
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>>ans;
+       vector<vector<int>>ans;
+        int n = nums.size();
+        vector<int>freq(n,0);
         vector<int>ds;
-        int freq[nums.size()];
-        for(int i=0;i<nums.size();i++)
-        {
-            freq[i]=0;
-        }
-        recurPermute(ds, nums, ans, freq);
+        recurPermutate(nums,n,ds,ans,freq);
         return ans;
+        
     }
 };
