@@ -31,6 +31,8 @@ public:
         
         root->left = trimBST(root->left,low,high);
         root->right = trimBST(root->right,low,high);
+        //TC => O(N)
+        //SC => O(N)
         
         return root;
     }
