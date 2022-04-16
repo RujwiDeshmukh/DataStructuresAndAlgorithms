@@ -12,25 +12,29 @@
 class Solution {
 public:
     
-     TreeNode* convertToGst(TreeNode* root,int &sum)
+    TreeNode* BSTtoGST(TreeNode* root, int &sum)
     {
         if(root==NULL)
         {
             return NULL;
         }
         
-        convertToGst(root->right,sum);
+        //first need to visit all the right nodes
+        //then process the root node
+        //modify the value of the root node
+        //then visit all the left nodes
+        BSTtoGST(root->right,sum);
+        //passing by refernce as we want to hold the value of the node
         sum += root->val;
         root->val = sum;
-        convertToGst(root->left,sum);
+        
+        BSTtoGST(root->left,sum);
         
         return root;
     }
     
-    
     TreeNode* convertBST(TreeNode* root) {
         int sum=0;
-        return convertToGst(root,sum);
-
+       return BSTtoGST(root,sum);
     }
 };
