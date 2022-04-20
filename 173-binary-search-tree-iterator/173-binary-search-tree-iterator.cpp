@@ -19,8 +19,7 @@ public:
     }
     
     int next() {
-        
-        TreeNode *topNode = st.top();
+        TreeNode* topNode = st.top();
         st.pop();
         pushAll(topNode->right);
         return topNode->val;
@@ -36,11 +35,14 @@ public:
     }
     
     bool hasNext() {
-        if(st.empty())
+        
+        if(!st.empty())
         {
-            return false;
+            
+            return true;
         }
-        return true;
+        
+        return false;
     }
 };
 
