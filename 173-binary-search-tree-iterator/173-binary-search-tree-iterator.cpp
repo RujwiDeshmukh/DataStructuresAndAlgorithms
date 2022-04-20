@@ -12,7 +12,14 @@
 class BSTIterator {
 public:
     
+    //by storing the inorder traversal in vector we can iterator over vector and return the values
+    //for this 
+    //SC => O(N)
+    //TC => O(1)
+    
     stack<TreeNode*>st;
+    //SC => O(H)
+    //TC => O(1)
     
     BSTIterator(TreeNode* root) {
         pushAll(root);
