@@ -2,33 +2,33 @@ class Solution {
 public:
     int maxOperations(vector<int>& nums, int k) {
         
-        //two pointers approach to calculate the pairs
-        //to implement this approach we need to sort the array
-        int i=0;
-        int j=nums.size()-1;
-        int count=0;
-        sort(nums.begin(),nums.end());
+        //efficient appraoch that works in O(n) --->TC
         
-        while(i<j)
+        unordered_map<int,int>mp;
+        int count=0;
+        
+        for(int i=0;i<nums.size();i++)
         {
-            int sum = nums[i]+nums[j];
+            int res = k- nums[i];
             
-            if(sum==k)
+            if(mp.find(res) != mp.end())
             {
-                i++;
-                j--;
                 count++;
-            }
-            else if(sum > k)
-            {
-                j--;
+                mp[res]--;
+                
+                if(mp[res]==0)
+                {
+                    mp.erase(res);
+                }
             }
             else
             {
-                i++;
+                //insert the values into map i.e. are present in arrays
+                mp[nums[i]] += 1;
             }
         }
         
         return count;
     }
+    
 };
