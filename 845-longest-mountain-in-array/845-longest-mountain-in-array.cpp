@@ -25,7 +25,8 @@ public:
         
         for(int i=0;i<n;i++)
         {
-            if(up[i]&&down[i])
+            if(up[i]&&down[i])//&& is used as it is mandatory that
+                //both sides of the peak element should consist of valley
             {
                 ans = max(ans,up[i]+down[i]+1);
             }
