@@ -3,47 +3,32 @@ public:
     int longestMountain(vector<int>& arr) {
         
         int n = arr.size();
+        vector<int>up(n,0);
+        vector<int>down(n,0);
         int ans=0;
         
-        //0 and n-1 cannot be the peak element 
-        //so we will start the loop from
-        
-        for(int i=1;i<=n-2;)
+        for(int i=n-2;i>=0;i--)
         {
-            //find the peak element
-            if(arr[i]>arr[i-1] && arr[i]>arr[i+1])
+            if(arr[i]>arr[i+1])
             {
-                //peak element is found
-                //find valley on the both sides of the peak element
-                
-                int j=i;
-                //peak element is already counted
-                int count=1;
-                
-                while(j>0 && arr[j]>arr[j-1])
-                {
-                     j--;
-                    count++;
-                }
-                
-                while(i<n-1 && arr[i]>arr[i+1])
-                {
-                    i++;
-                    count++;
-                }
-                
-                 ans = max(ans,count);
+                down[i] = down[i+1]+1;
             }
-            else
+        }
+        
+        for(int i=1;i<n;i++)
+        {
+            if(arr[i]>arr[i-1])
             {
-                i++;
-                //as we know that peak element will be found after one
-                //mountain is over 
-                //as peak element should have neighbours less than itself
-                //until valley is encountering we cannot find such element 
-                //so incrementing i wont effect
+                up[i] = up[i-1]+1;
             }
-            
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            if(up[i]&&down[i])
+            {
+                ans = max(ans,up[i]+down[i]+1);
+            }
         }
         
         return ans;
