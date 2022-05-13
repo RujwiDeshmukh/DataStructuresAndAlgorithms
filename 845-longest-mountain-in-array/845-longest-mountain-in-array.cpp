@@ -3,35 +3,39 @@ public:
     int longestMountain(vector<int>& arr) {
         
         int n = arr.size();
-        vector<int>up(n,0);
-        vector<int>down(n,0);
-        int ans=0;
+        int count=0;
         
-        for(int i=n-2;i>=0;i--)
+        int i=1;
+        
+        while(i<n)
         {
-            if(arr[i]>arr[i+1])
+            while(i<n && arr[i]==arr[i-1])
             {
-                down[i] = down[i+1]+1;
+                i++;
+            }
+            
+            int up=0;
+         
+            //increasing condition
+            while(i<n && arr[i]>arr[i-1])
+            {
+                i++;
+                up++;
+            }
+            
+            int down=0;
+            //decreasing condition
+            while(i<n && arr[i-1]>arr[i])
+            {
+                i++;
+                down++;
+            }
+            
+            if(up>0 && down>0)
+            {
+                count = max(count,up+down+1);
             }
         }
-        
-        for(int i=1;i<n;i++)
-        {
-            if(arr[i]>arr[i-1])
-            {
-                up[i] = up[i-1]+1;
-            }
-        }
-        
-        for(int i=0;i<n;i++)
-        {
-            if(up[i]&&down[i])//&& is used as it is mandatory that
-                //both sides of the peak element should consist of valley
-            {
-                ans = max(ans,up[i]+down[i]+1);
-            }
-        }
-        
-        return ans;
+        return count;
     }
 };
