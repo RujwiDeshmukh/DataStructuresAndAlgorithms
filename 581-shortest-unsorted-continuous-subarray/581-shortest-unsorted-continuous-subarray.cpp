@@ -2,29 +2,44 @@ class Solution {
 public:
     int findUnsortedSubarray(vector<int>& nums) {
         
-        vector<int>sorted(nums.begin(), nums.end());
-        sort(sorted.begin(),sorted.end());
-        int size = sorted.size();
-        cout<<size<<endl;
+        
+       //https://leetcode.com/problems/shortest-unsorted-continuous-subarray/discuss/2003057/TWO-POINTERS-APPROACH-%2B-MEME
+        
+        int prev = nums[0];
+        //as array should be in ascending order then
+        //previous can never be greater than current element
+        
         int n = nums.size();
-        int i=0;
-        int j= n-1;
+        int end=-1;
+        int start=0;
         
-        while(i<n && nums[i]==sorted[i])
+        for(int i=1;i<n;i++)
         {
-            i++;
+            if(prev > nums[i])
+            {
+                //order not matched ,here is loop hole 
+                end=i;
+            }
+            else
+            {
+                prev = nums[i];
+            }
         }
         
-        //j should be greater than i as 
-        //second loop hole should be after 2nd loop hole
-        while(j>i && nums[j]==sorted[j])
+        int last = nums[n-1];
+        
+        for(int i=n-2;i>=0;i--)
         {
-            j--;
+            if(last < nums[i])
+            {
+                start=i;
+            }
+            else
+            {
+                last = nums[i];
+            }
         }
         
-        cout<<i<<endl;
-        cout<<j<<endl;
-        
-        return j-i+1;
+        return end-start+1;
     }
 };
