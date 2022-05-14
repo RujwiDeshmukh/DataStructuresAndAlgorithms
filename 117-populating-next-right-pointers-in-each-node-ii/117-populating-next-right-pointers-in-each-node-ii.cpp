@@ -19,7 +19,11 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-         if(root==NULL)
+        
+        //here we have to perform steps level wise 
+        //so we are going to apply level order traversal
+        
+        if(root==NULL)
         {
             return root;
         }
@@ -29,22 +33,21 @@ public:
         
         while(!q.empty())
         {
-            int size = q.size();
+           int size = q.size();
+            //here we are defining previous for every level
+            //no 2 levels are connected with each other
             Node* prev = NULL;
             for(int i=0;i<size;i++)
             {
                 Node* temp = q.front();
                 q.pop();
-                /*cout<<q.front()<<endl;
-                temp->next = q.front();*/
-                
                 
                 if(prev != NULL)
                 {
-                    prev->next =temp;
+                    prev->next = temp;
                 }
                 
-                prev = temp;
+                prev=temp;
                 
                 if(temp->left != NULL)
                 {
@@ -56,8 +59,8 @@ public:
                     q.push(temp->right);
                 }
             }
-            
-            prev->next = NULL;
+            //here previous will be the last element present in the current level
+            prev->next=NULL;
         }
         
         return root;
