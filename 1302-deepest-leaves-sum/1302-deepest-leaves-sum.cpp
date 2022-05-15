@@ -12,41 +12,44 @@
 class Solution {
 public:
     
-    int maxDepth(TreeNode* root)
+    
+    //https://leetcode.com/problems/deepest-leaves-sum/discuss/1152947/Deepest-Leaves-Sum-or-Short-and-Easy-Solutions-w-Explanation-or-BFS-and-DFS-Approach
+    
+    void deepLeavesSum(TreeNode* root,int &deepest,int &sum,int depth)
     {
         if(root==NULL)
         {
-            return 0;
+            return ;
         }
         
-        int left = maxDepth(root->left);
-        int right = maxDepth(root->right);
-        
-        return 1 + max(left,right);
-        
-    }
-    
-    int sumDeepestLeaves(TreeNode* root,int maxDepth,int depth)
-    {
-        if(root == NULL)
+        if(root->left==NULL && root->right==NULL)
         {
-            return 0;
-        }
-        
-        if(depth == maxDepth)
-        {
-            return root->val;
-        }
+           if(depth > deepest)
+           {
+               sum = root->val;
+               deepest = depth;
+           }
             
-        int left = sumDeepestLeaves(root->left,maxDepth,depth+1);
-        int right = sumDeepestLeaves(root->right,maxDepth,depth+1);
+            else if(depth == deepest)
+            {
+                //same depth is encountered again then
+                //add to sum only
+                sum += root->val;
+            }
+        }
         
-        return left+right;
+        deepLeavesSum(root->left,deepest,sum,depth+1);
+        deepLeavesSum(root->right,deepest,sum,depth+1);
     }
     
     
     int deepestLeavesSum(TreeNode* root) {
-        int depth = maxDepth(root);
-        return sumDeepestLeaves(root,depth,1);
+        int deepest=0, sum=0;
+        
+        deepLeavesSum(root,deepest,sum,0);
+        
+        return sum;
     }
+    
+    
 };
