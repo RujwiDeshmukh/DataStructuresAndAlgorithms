@@ -1,16 +1,16 @@
 class Solution {
 public:
-
-    int recurcoinChange(vector<int>& coins, int idx, int amount, vector<vector<int>> &dp)
+    
+    int recurCoinChange(vector<int>& coins,int idx,int amount,vector<vector<int>>& dp)
     {
-        if(amount == 0)
-        {
-            return 0;
-        }
-        
         if(idx >= coins.size())
         {
-            return 10000;
+            return 1000;
+        }
+        
+        if(amount==0)
+        {
+            return 0;
         }
         
         if(dp[idx][amount] != -1)
@@ -18,31 +18,31 @@ public:
             return dp[idx][amount];
         }
         
-        int consider = 10000;
-        //as if we take consider=0 then if left call is not made
-        //then minimum of both value will give 0 as value
+        int consider=1000;
         
+        //using this condition as we are substracting values from amount
+        //and final result can be -ve
         if(coins[idx] <= amount)
         {
-            consider = 1 + recurcoinChange(coins,idx,amount-coins[idx],dp);
+            consider = 1+recurCoinChange(coins,idx,amount-coins[idx],dp);
         }
         
-        int notConsider =  recurcoinChange(coins,idx+1,amount,dp);
+        int notConsider = recurCoinChange(coins,idx+1,amount,dp);
         
-        return dp[idx][amount]=min(consider,notConsider);
+        return dp[idx][amount] = min(consider,notConsider);
+        
     }
+    
     
     int coinChange(vector<int>& coins, int amount) {
         
-        vector<vector<int>>dp(coins.size()+5, vector<int>(amount+5, -1));
+        vector<vector<int>>dp(coins.size()+5, vector<int>(amount+5,-1));
         
-        int ans = recurcoinChange(coins,0,amount,dp);
+        int ans = recurCoinChange(coins,0,amount,dp);
         
-        if(ans == 10000)
-        {
-            return -1;
-        }
+        if(ans==1000)   return -1;
         
         return ans;
+        
     }
 };
