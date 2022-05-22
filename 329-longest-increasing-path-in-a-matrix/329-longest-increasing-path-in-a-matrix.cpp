@@ -6,11 +6,9 @@ int maximumPath(vector<vector<int>>& matrix,int i,int j,int prev,vector<vector<i
         int n = matrix.size();
         int m = matrix[0].size();
         
-        if(i<0 || i>=n || j<0 || j>=m)
-        {
-            return 0;
-        }
-        if(prev >= matrix[i][j])
+    //returning zero as we cannot consider that element in the longest path
+    //https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/1151423/C%2B%2B-Optimization-from-Brute-Force-to-DP-or-Easy-Solution-w-Explanation
+        if(i<0 || i>=n || j<0 || j>=m || prev >= matrix[i][j] )
         {
             return 0;
         }
@@ -26,7 +24,8 @@ int maximumPath(vector<vector<int>>& matrix,int i,int j,int prev,vector<vector<i
         int top = 1+maximumPath(matrix,i,j-1,matrix[i][j],dp);
         int bottom = 1+maximumPath(matrix,i,j+1,matrix[i][j],dp);
         
-        return dp[i][j] = max(left, max(right, max(top,bottom)));
+        //return dp[i][j] = max(left, max(right, max(top,bottom)));
+        return dp[i][j] = max({ left, right ,top, bottom});
         
     }
     
