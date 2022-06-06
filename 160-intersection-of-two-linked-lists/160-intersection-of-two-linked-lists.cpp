@@ -13,6 +13,8 @@ public:
         ListNode *temp1 = headA;
         ListNode *temp2 = headB;
         
+        //https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/1093014/C%2B%2B-Four-different-solutions
+        
         int len1=0, len2=0;
         int d=0;
         
