@@ -19,6 +19,8 @@ public:
             }
         }
         
+        //https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/discuss/901271/C%2B%2BJavaPython-One-pass-Clean-and-Concise-Strictly-O(N)
+        
         for(int i=1;i<=6;i++)
         {
             if(countA[i]+countB[i]-countSame[i]==n)
