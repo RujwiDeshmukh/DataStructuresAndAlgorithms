@@ -1,52 +1,52 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
-        
+     
         int totalSum = accumulate(nums.begin(),nums.end(),0);
-        int target = totalSum - x;
-        int ans = -1;
+        cout<<totalSum<<endl;
+        int targetSum = totalSum - x;
+        int start=0;
+        int end=0;
         int sum=0;
-        int res=0;
+        int n = nums.size();
+        int len=0;
+        int max_len=-1;
         
         if(x > totalSum)
         {
             return -1;
         }
         
-        int end=0, start=0;
-        
-        while(end < nums.size())
+        while(end < n)
         {
             sum += nums[end];
             
-            if(sum < target)
+            if(sum < targetSum)
             {
                 end++;
                 continue;
             }
-        
-            while(sum > target)
+            
+            while(sum > targetSum)
             {
                 sum -= nums[start];
                 start++;
             }
             
-            
-              if(sum == target)
+            if(sum == targetSum)
             {
-                res = end-start+1;
-                ans = max(ans,res);
-                cout<<ans;
+                len = end-start+1;
+                max_len = max(max_len,len);
             }
             
             end++;
         }
         
-        if(ans==-1)
+        if(max_len == -1)
         {
-            return ans;
+            return max_len;
         }
         
-        return nums.size()-ans;
+        return n-max_len;
     }
 };
