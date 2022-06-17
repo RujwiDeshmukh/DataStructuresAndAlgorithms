@@ -4,6 +4,12 @@ public:
      
         int totalSum = accumulate(nums.begin(),nums.end(),0);
         cout<<totalSum<<endl;
+        
+         if(x > totalSum)
+        {
+            return -1;
+        }
+        
         int targetSum = totalSum - x;
         int start=0;
         int end=0;
@@ -12,10 +18,7 @@ public:
         int len=0;
         int max_len=-1;
         
-        if(x > totalSum)
-        {
-            return -1;
-        }
+       
         
         while(end < n)
         {
