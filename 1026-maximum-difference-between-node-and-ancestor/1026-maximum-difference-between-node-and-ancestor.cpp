@@ -16,7 +16,7 @@ public:
     {
         if(root==NULL)
         {
-            cout<<maxi<<" "<<mini<<endl;
+           // cout<<maxi<<" "<<mini<<endl;
             return (maxi-mini);
         }
         maxi=max(root->val,maxi);   // UPDATE MAX
