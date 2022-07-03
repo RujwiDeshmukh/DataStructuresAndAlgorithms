@@ -21,6 +21,7 @@ public:
             }
         }
         
+        //https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/discuss/2061949/Greedy-oror-Intuition-oror-O(1)-Space-oror-(C%2B%2BJava)
         return cnt;
     }
 };
