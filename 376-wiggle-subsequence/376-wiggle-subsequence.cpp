@@ -3,23 +3,29 @@ public:
     int wiggleMaxLength(vector<int>& nums) {
         
         //greedy approach
+        //https://leetcode.com/problems/wiggle-subsequence/discuss/1115385/Short-and-Easy-w-Explanation-or-O(N)-time-O(1)-Space
         
-        int prevDiff=0;
-        int n = nums.size();
-        int currDiff;
-        int len=1;
+        //https://leetcode.com/problems/wiggle-subsequence/discuss/1115385/Short-and-Easy-w-Explanation-or-O(N)-time-O(1)-Space
+        
+          int n = nums.size();
+          int len=1;
+          int up=1;
+          int down=1;
         
         for(int i=1;i<n;i++)
         {
-            currDiff = nums[i] - nums[i-1];
-            
-            if((prevDiff <= 0 && currDiff > 0)  ||  (prevDiff >= 0 && currDiff < 0))
+            //valley
+            if(nums[i] < nums[i-1])
             {
-                len++;
-                prevDiff=currDiff;
+                down = 1 + up;
+            }
+            //peak
+            else if(nums[i-1] < nums[i])
+            {
+                up = 1 + down;
             }
         }
         
-        return len;
+        return max(up,down);
     }
 };
