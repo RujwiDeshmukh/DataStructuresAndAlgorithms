@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    
+    //https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/discuss/1657816/C%2B%2BPython-Simple-Solution-w-Explanation-or-Bottom-up-%2B-Top-Down-%2B-Optimized-DFS-Approaches
     int findmax(TreeNode* root,int maxi,int mini)
     {
         if(root==NULL)
