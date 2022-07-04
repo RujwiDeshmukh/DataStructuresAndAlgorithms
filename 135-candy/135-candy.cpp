@@ -1,36 +1,34 @@
 class Solution {
 public:
+    
+    //https://leetcode.com/problems/candy/discuss/1301166/C%2B%2B-Solution-oror-O(n)-oror-Easy-Understanding
+    
     int candy(vector<int>& ratings) {
-          
+        
         int n = ratings.size();
-        int ans=0;
         
-        vector<int>left(n,1);
-        vector<int>right(n,1);
+        vector<int>numbers(n,1);
         
-        //checking for left neighbour
         for(int i=1;i<n;i++)
         {
             if(ratings[i] > ratings[i-1])
             {
-                left[i] = left[i-1]+1;
+                numbers[i] = numbers[i-1]+1;
             }
         }
         
-        //checking for right neighbour
+        int res = numbers[n-1];
+        
         for(int i=n-2;i>=0;i--)
         {
-            if(ratings[i] > ratings[i+1])
+            if((ratings[i] > ratings[i+1]) && (numbers[i] < numbers[i+1]+1))
             {
-                right[i] = right[i+1]+1;
+                numbers[i] = numbers[i+1]+1;
             }
+            
+            res += numbers[i];
         }
         
-        for(int i=0;i<n;i++)
-        {
-            ans += max(left[i],right[i]);
-        }
-        
-        return ans;
+        return res;
     }
 };
