@@ -12,6 +12,8 @@ class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
         
+       // https://leetcode.com/problems/partition-list/discuss/1157903/Simple-1-Pass-Partition-w-Two-Pointers-Explained-or-Beats-100
+        
         ListNode* lesser = new ListNode(-1);
         ListNode* greater = new ListNode(-1);
         ListNode* lesser_head = lesser;
@@ -21,18 +23,19 @@ public:
         {
             if(head->val < x)
             {
-                lesser->next = new ListNode(head->val);
+                lesser->next = head;
                 lesser = lesser->next;
             }
             else
             {
-                greater->next = new ListNode(head->val);
+                greater->next = head;
                 greater = greater->next;
             }
             
             head=head->next;
         }
         
+        greater->next = NULL;
         lesser->next = greater_head->next;
         
         return lesser_head->next;
