@@ -1,34 +1,46 @@
 class Solution {
 public:
-    
-    //https://leetcode.com/problems/candy/discuss/1301166/C%2B%2B-Solution-oror-O(n)-oror-Easy-Understanding
-    
     int candy(vector<int>& ratings) {
         
         int n = ratings.size();
+        int i=1;
+        int candy=n;
         
-        vector<int>numbers(n,1);
-        
-        for(int i=1;i<n;i++)
+        while(i<n)
         {
-            if(ratings[i] > ratings[i-1])
+            if(ratings[i] == ratings[i-1])
             {
-                numbers[i] = numbers[i-1]+1;
-            }
-        }
-        
-        int res = numbers[n-1];
-        
-        for(int i=n-2;i>=0;i--)
-        {
-            if((ratings[i] > ratings[i+1]) && (numbers[i] < numbers[i+1]+1))
-            {
-                numbers[i] = numbers[i+1]+1;
+                i++;
+                continue;
             }
             
-            res += numbers[i];
+            //for increasing slope
+            
+            int peak=0;
+            
+            while(ratings[i] > ratings[i-1])
+            {
+                peak++;
+                candy += peak;
+                i++;
+                
+                if(i==n)
+                {
+                    return candy;  //for case [1,2]
+                }
+            }
+            
+            int valley=0;
+            
+            while(i<n && ratings[i] < ratings[i-1])
+            {
+                valley++;
+                candy += valley;
+                i++;
+            }
+            
+            candy -= min(peak,valley);
         }
-        
-        return res;
+        return candy;
     }
 };
