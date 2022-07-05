@@ -2,29 +2,42 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         
-        unordered_set<int>s(nums.begin(),nums.end());
-        int longest=0;
-       // https://leetcode.com/problems/longest-consecutive-sequence/discuss/41060/A-simple-C%2B%2Bsolution-using-unordered_set.And-simple-consideration-about-this-problem
-        for(auto num : nums)
+        //https://leetcode.com/problems/longest-consecutive-sequence/discuss/41060/A-simple-   C%2B%2Bsolution-using-unordered_set.And-simple-consideration-about-this-problem
+        
+        if(nums.empty())
         {
-            int curr_longest=1;
-            // we are finding the consecutive smaller and greater elements
-            //for each element present in an array
-            for(int j=1;s.count(num-j)!=0;j++)
-            {
-                s.erase(num-j);
-                curr_longest++;
-            }
-            
-            for(int j=1;s.count(num+j)!=0;j++)
-            {
-                s.erase(num+j);
-                curr_longest++;
-            }
-            
-           longest = max(curr_longest,longest);
+            return 0;
         }
         
-        return longest;
+        unordered_set<int>st(nums.begin(),nums.end());
+        int ans=1;
+        
+        for(auto num : nums)
+        {
+            if(st.find(num) == st.end())
+            {
+                continue;
+            }
+            
+            st.erase(num);
+            
+            int prev = num-1;
+            int next = num+1;
+            
+            while(st.find(prev) != st.end())
+            {
+                st.erase(prev);
+                prev--;
+            }
+            
+            while(st.find(next) != st.end())
+            {
+                st.erase(next);
+                next++;
+            }
+            
+            ans = max(ans,next-prev-1);
+        }
+        return ans;
     }
 };
