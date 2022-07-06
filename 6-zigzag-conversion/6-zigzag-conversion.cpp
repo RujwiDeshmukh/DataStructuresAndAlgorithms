@@ -1,31 +1,43 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-             
-       // https://leetcode.com/problems/zigzag-conversion/discuss/920510/c%2B%2B(8ms-90)-very-easy-for-understand-(with-commentaries)
-             
-        vector<string> tmp(numRows);
-        int n = s.size();
-        string ans; 
-        int i=0;
         
-        while(i<n)
+        
+        int n = s.size();
+        vector<string>tmp(numRows);
+        bool down=false;
+        int j=0;
+        string ans="";
+        
+        if(numRows == 1)
         {
-           for(int j=0;j<numRows && i<n;j++,i++)
-           {
-               tmp[j] += s[i];
-               //cannot push_back here as we have already initialized the array
-           }
-            
-           for(int j=numRows-2;j>0 && i<n;j--,i++)
-           {
-               tmp[j] += s[i];
-           }
+            return s;
         }
         
-        for(int i=0;i<numRows;i++)
+        for(int i=0;i<n;i++)
         {
-            ans += tmp[i];
+            tmp[j] += s[i];
+            if(j==numRows-1)
+            {
+               down=false;   
+            }
+            else if(j==0)
+            {
+                down=true;
+            }
+            if(down==true)
+            {
+                j++;
+            }
+            else
+            {
+                j--;
+            }
+        }
+        
+        for(auto i : tmp)
+        {
+            ans += i;
         }
         
         return ans;
