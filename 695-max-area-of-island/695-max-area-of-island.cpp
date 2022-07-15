@@ -1,35 +1,29 @@
 class Solution {
 public:
     
-    void bfs(vector<vector<int>>& grid,int sr,int sc,int n,int m,int &temp)
+    void dfs(int row,int col,vector<vector<int>>& grid,int& size)
     {
-        queue<pair<int,int>>q;
-        q.push({sr,sc});
+        int n = grid.size();
+        int m = grid[0].size();
         
-        while(!q.empty())
+        if(row<0 || col<0 || row>=n || col>=m || grid[row][col]==0 || grid[row][col]==-1)
         {
-            auto pr = q.front();
-            q.pop();
-            int currentRow = pr.first;
-            int currentCol = pr.second;
-            
-    if(currentRow<0 || currentRow >=n || currentCol<0 || currentCol>=m || 
-      grid[currentRow][currentCol]==0)
-      {
-               continue;
-      }
-            
-        grid[currentRow][currentCol] = 0;
-        temp += 1;
-        q.push({currentRow+1,currentCol});
-        q.push({currentRow-1,currentCol});
-        q.push({currentRow,currentCol+1});
-        q.push({currentRow,currentCol-1});
+            return;
+        }
+        
+        if(grid[row][col]==1)
+        {
+            grid[row][col]=-1;
+            size += 1;
+            dfs(row+1,col,grid,size);
+            dfs(row-1,col,grid,size);
+            dfs(row,col+1,grid,size);
+            dfs(row,col-1,grid,size);
         }
     }
     
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-           
+        
         int n = grid.size();
         int m = grid[0].size();
         int ans=INT_MIN;
@@ -38,11 +32,11 @@ public:
         {
             for(int j=0;j<m;j++)
             {
+                int size=0;
                 if(grid[i][j]==1)
                 {
-                    int temp=0;
-                    bfs(grid,i,j,n,m,temp);
-                    ans = max(ans,temp);
+                    dfs(i,j,grid,size);
+                    ans = max(ans,size);
                 }
             }
         }
