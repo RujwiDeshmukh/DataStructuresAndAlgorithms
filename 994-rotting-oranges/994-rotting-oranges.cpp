@@ -1,69 +1,60 @@
 class Solution {
 public:
-    int orangesRotting(vector<vector<int>>& grid) {
-        
-        int minutes=0;
-        queue<pair<int,int>>q;
-        int fresh=0;
+    
+    void dfs(int row,int col,vector<vector<int>>& grid,int minutes)
+    {
         
         int n = grid.size();
         int m = grid[0].size();
         
-        for(int i=0;i<n;i++)
+        if(row<0 || col<0 || row >=n || col >= m )
         {
-            for(int j=0;j<m;j++)
-            {
-                if(grid[i][j]==1)
-                {
-                    fresh++;
-                }
-                else if(grid[i][j]==2)
-                {
-                    q.push({i,j});
-                }
-            }
+            return ;
         }
         
-        if(fresh==0)
+        if(grid[row][col]==1 || grid[row][col]>=minutes)
         {
-            return 0;
+            grid[row][col] = minutes;
+            dfs(row+1,col,grid,minutes+1);
+            dfs(row-1,col,grid,minutes+1);
+            dfs(row,col+1,grid,minutes+1);
+            dfs(row,col-1,grid,minutes+1);
         }
-        
-        int dirX[] = {0,1,0,-1};
-        int dirY[] = {1,0,-1,0};
-        
-        while(!q.empty())
-        {
-            int size = q.size();
-            
-            for(int i=0;i<size;i++)
-            {
-                auto p = q.front();
-                q.pop();
-               
-                for(int k=0;k<4;k++)
-                {
-                    int x = p.first + dirX[k];
-                    int y = p.second + dirY[k];
-                    
-                if(x>=0 && y>=0 && x<n && y<m && grid[x][y]==1)
-                {
-                    grid[x][y]=2;
-                    fresh--;
-                    q.push({x,y});
-                }
+    }
+    
+    
+    int orangesRotting(vector<vector<int>>& grid) {
+     
+          int n = grid.size();
+          int m = grid[0].size();
+          int minutes=2;
+          int ans= -1;
+         
+          for(int i=0;i<n;i++)
+          {
+              for(int j=0;j<m;j++)
+              {
+                  if(grid[i][j]==2)
+                  {
+                      dfs(i,j,grid,minutes);
+                  }
               }
-                
-            }
-            //after one for loop one level completes so incrementing after for loop
-            minutes++;
-        }
+          }
         
-        if(fresh==0)
-        {
-            return minutes-1;
-        }
-        
-        return -1;
+        for(int i=0;i<n;i++)
+          {
+              for(int j=0;j<m;j++)
+              {
+                  if(grid[i][j]==1)
+                  {
+                      return -1;
+                  }
+                  else
+                  {
+                      minutes = max(minutes,grid[i][j]);
+                  }
+              }
+          }
+        return minutes-2;
     }
 };
