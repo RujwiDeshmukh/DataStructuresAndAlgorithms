@@ -18,7 +18,7 @@ public:
             return true;
         }
         
-        if(p==NULL || q==NULL || p->val != q->val)
+        if(p==NULL || q==NULL )
         {
             return false;
         }
