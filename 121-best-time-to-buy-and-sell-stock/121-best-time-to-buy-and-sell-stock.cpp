@@ -1,17 +1,49 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-     
-        
-        int n = prices.size();
-        int minPrice=INT_MAX;
-        int maxProfit=0;  //it is taken 0 as profit cannot be negative
-        
-        for(int i=0;i<n;i++)
+    
+    //1st ---> no. of elements in an array
+    //2nd ---> buy/not buy field
+    //3rd ---> no. of transcations
+    int dp[100000][3][2];
+    
+    int bestTime(vector<int>& prices,int currentDay,int canBuy,int transCount)
+    {
+        if(currentDay >= prices.size())
         {
-            minPrice = min(minPrice,prices[i]);
-            maxProfit = max(maxProfit, prices[i]-minPrice);
+            return 0;
         }
-        return maxProfit;
+        
+        if(transCount <= 0)
+        {
+            return 0;
+        }
+        
+        if(dp[currentDay][canBuy][transCount] != -1)
+        {
+            return dp[currentDay][canBuy][transCount];
+        }
+        
+        int idle;
+        int ans=0;
+        
+        if(canBuy)
+        {
+            idle = bestTime(prices,currentDay+1,canBuy,transCount);
+            int buy = -prices[currentDay]+bestTime(prices,currentDay+1,0,transCount);
+            ans = max(idle,buy);
+        }
+        else
+        {
+           idle = bestTime(prices,currentDay+1,0,transCount);
+           int sell = prices[currentDay]+bestTime(prices,currentDay+1,canBuy,transCount-1);
+           ans = max(idle,sell);
+        }
+        
+        return dp[currentDay][canBuy][transCount] = ans;
+    }
+    
+    int maxProfit(vector<int>& prices) {
+        memset(dp,-1,sizeof(dp));
+       return bestTime(prices,0,1,1);
     }
 };
