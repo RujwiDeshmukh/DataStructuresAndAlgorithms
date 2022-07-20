@@ -1,26 +1,19 @@
 class Solution {
 public:
     
-    bool dfs(int node,vector<vector<int>>&graph,vector<int>& color,int currColor)
-    {
-        if(color[node]!=-1)
-        {
-            //return color[node]==currColor;
-            
-            if(color[node]!=currColor)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-       
-        color[node]=currColor;
+    bool bipartiteBfs(int node,vector<vector<int>>& graph,vector<int>& color)
+    {      
         for(auto neigh : graph[node])
         {
-            if(dfs(neigh,graph,color,1-currColor)==false)
+            if(color[neigh]==-1)
+            {
+                color[neigh] = 1-color[node];
+                if(!bipartiteBfs(neigh,graph,color))
+                {
+                    return false;
+                }
+            }
+            else if(color[neigh]==color[node])
             {
                 return false;
             }
@@ -28,7 +21,7 @@ public:
         
         return true;
     }
-    
+
     
     bool isBipartite(vector<vector<int>>& graph) {
         
@@ -36,16 +29,15 @@ public:
         
         for(int i=0;i<graph.size();i++)
         {
-           if(color[i]==-1)
-           {
-               cout<<"Color : "<<color[i]<<endl;
-              if(dfs(i,graph,color,0)==false)
-              {
-                  return false;
-              }
-           }
+            if(color[i]==-1)
+            {
+                color[i]=1;
+                if(!bipartiteBfs(i,graph,color))
+                {
+                    return false;
+                }
+            }
         }
-        
         return true;
     }
 };
