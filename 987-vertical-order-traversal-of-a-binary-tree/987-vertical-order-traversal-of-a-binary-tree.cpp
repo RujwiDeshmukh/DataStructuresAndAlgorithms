@@ -42,7 +42,22 @@ public:
         
          vector<vector<int>>ans;
         
-          for(auto p : mp)
+   /*      map<int,map<int,multiset<int>>>::iterator it;
+        
+        for(it = mp.begin(); it != mp.end();it++)
+        {
+              vector<int>col;
+            
+            multiset<int>::iterator ite;
+            
+      for(ite = ((it->second)->second).begin(); ite != ((it->second)->second).end(); ite++)
+        {
+           col.insert(col.end(),ite.begin(),ite.end());    
+        }
+             ans.push_back(col);
+        }  */
+        
+         for(auto p : mp)
           {
               vector<int>col;
               for(auto q : p.second)
@@ -51,7 +66,7 @@ public:
               }
               
               ans.push_back(col);
-          }
+          }  
         
         return ans;
     }
