@@ -2,24 +2,26 @@ class Solution {
 public:
     int firstUniqChar(string s) {
         
-        unordered_map<char,int>mp;
+        unordered_map<char,pair<int,int>>mp;
         
         int n = s.size();
-        int ans=0;
+        int idx = s.size();
         
         for(int i=0;i<n;i++)
         {
-            mp[s[i]]++;
+            mp[s[i]].first++;
+            mp[s[i]].second=i;
         }
         
-        for(int i=0;i<n;i++)
+        for(auto m : mp)
         {
-            if(mp[s[i]]==1)
+            auto p = m.second;
+            if(p.first==1)
             {
-                return i;
+                idx = min(idx,p.second);
             }
         }
         
-        return -1;
+        return idx == s.size() ? -1 : idx;
     }
 };
