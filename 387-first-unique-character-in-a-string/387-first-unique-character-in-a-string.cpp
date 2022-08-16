@@ -13,6 +13,8 @@ public:
             mp[s[i]].second=i;
         }
         
+       // https://leetcode.com/problems/first-unique-character-in-a-string/discuss/86338/C%2B%2B-2-solutions
+        
         for(auto m : mp)
         {
             auto p = m.second;
