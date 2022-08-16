@@ -12,9 +12,8 @@
 class Solution {
 public:
     
-    bool isValid(TreeNode* root, long long & prev)
+    bool isValid(TreeNode* root,long long int & prev)
     {
-        //Perform InOrder Traversal
         if(root==NULL)
         {
             return true;
@@ -22,7 +21,7 @@ public:
         
         bool leftAns = isValid(root->left,prev);
         
-        //process the node
+        //As we are traversing whole left side first then prev cant ever be greater than current element, if its then it cant be bst
         
         if(root->val <= prev)
         {
@@ -34,12 +33,11 @@ public:
         bool rightAns = isValid(root->right,prev);
         
         return leftAns && rightAns;
-        
-        
     }
     
     bool isValidBST(TreeNode* root) {
-        long long prev = -99999999999;
-        return isValid(root, prev);
+        
+        long long int prev = -99999999999;
+        return isValid(root,prev);
     }
 };
