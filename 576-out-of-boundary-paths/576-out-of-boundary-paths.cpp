@@ -30,7 +30,7 @@ public:
         return dp[row][col][maxMove] = ans;
     }
     
-    
+  //  https://leetcode.com/problems/out-of-boundary-paths/discuss/1293835/Short-and-Easy-Solution-w-Explanation-or-Optimization-from-Brute-Force
     
     int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
         vector<vector<vector<int>>>dp(52, vector<vector<int>>(52, vector<int> (52,-1))); 
