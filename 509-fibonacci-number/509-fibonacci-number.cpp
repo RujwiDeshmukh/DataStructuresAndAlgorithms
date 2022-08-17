@@ -2,24 +2,21 @@ class Solution {
 public:
     int fib(int n) {
         
-          int x0=0, x1=1;
-          int x2=0;
-          int temp;
-          int sum=0;
+        vector<int>dp(n+1, -1);
         
-          if(n <= 1)
-          {
-              return n;
-          }
+        if(n==0 || n==1)
+        {
+            return n;
+        }
         
-          for(int i=0;i<n-1;i++)
-          {
-              x2 = x0+x1;
-              temp=x1;
-              x1=x2;
-              x0=temp;
-          }
+        dp[0]=0;
+        dp[1]=1;
         
-          return x2;
+        for(int i=2;i<=n;i++)
+        {
+            dp[i] = dp[i-1]+dp[i-2];
+        }
+        
+        return dp[n];
     }
 };
