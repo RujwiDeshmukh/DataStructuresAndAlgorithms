@@ -2,6 +2,8 @@ class Solution {
 public:
     int minSetSize(vector<int>& arr) {
         
+        //https://leetcode.com/problems/reduce-array-size-to-the-half/discuss/1319437/Simple-Solution-w-Explanation-or-Delete-Elements-by-Max-Frequency-or-O(N)-Beats-100
+        
         unordered_map<int,int>mp;
         multiset<int, greater<int>> mt;
         
