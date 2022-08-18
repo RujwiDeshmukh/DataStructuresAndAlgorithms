@@ -5,7 +5,9 @@ public:
         //https://leetcode.com/problems/reduce-array-size-to-the-half/discuss/1319437/Simple-Solution-w-Explanation-or-Delete-Elements-by-Max-Frequency-or-O(N)-Beats-100
         
         unordered_map<int,int>mp;
-        multiset<int, greater<int>> mt;
+        //rather than using multiset to sort elements in descending order use
+        //max so that number with higher frequency will be at the top
+        priority_queue<int>pq;
         
         for(auto num : arr)
         {
@@ -15,14 +17,15 @@ public:
         for(auto m : mp)
         {
             int freq = m.second;
-            mt.insert(freq);
+            pq.push(freq);
         }
         
         int deleted=0 , ans=0;
         
-        for(auto freq : mt)
+        while(!pq.empty())
         {
-            deleted += freq;
+            deleted += pq.top();
+            pq.pop();
             ans++;
             
             if(deleted >= (arr.size())/2)
