@@ -15,6 +15,7 @@ public:
             for(auto w : word)
             {
                 code += map[w-'a'];
+                //map[0,...........,25]
             }
             
             st.insert(code);
