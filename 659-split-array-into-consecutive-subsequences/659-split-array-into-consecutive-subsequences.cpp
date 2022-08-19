@@ -8,6 +8,7 @@ public:
         {
             freq[num]++;
         }
+       // https://leetcode.com/problems/split-array-into-consecutive-subsequences/discuss/2446913/C%2B%2B-oror-Greedy-oror-Fully-Commented-oror-Simplest-Solution-Of-All
         
         unordered_map<int,int>need;
         
