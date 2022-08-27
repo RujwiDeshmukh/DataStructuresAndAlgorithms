@@ -1,41 +1,30 @@
 class Solution {
 public:
     
-    int maxMoney(vector<int>& nums,int ind,vector<int>& dp)
+    //Striver's Bottom Up Solution
+    
+    int maxMoney(vector<int>& nums,vector<int>& dp)
     {
-        if(ind==0)
+        dp[0] = nums[0];
+        
+        for(int i=1;i<nums.size();i++)
         {
-            return nums[ind];
+            int take = nums[i];
+            if(i>1)
+            {
+                take += dp[i-2];
+            }
+            int notTake = dp[i-1];
+            
+            dp[i] = max(take,notTake);
         }
         
-        if(ind<0)
-        {
-            return 0;
-        }
-        
-        if(dp[ind]!=-1)
-        {
-            return dp[ind];
-        }
-        
-        //if you put condition for index should be greater than 1
-        //then for array [1,2] it wont chose 2 simply it will chose 1
-        //bcoz of that condition
-        
-       int pick = nums[ind] + maxMoney(nums,ind-2,dp);
-        
-       int notPick = maxMoney(nums,ind-1,dp);
-        
-       return dp[ind] =max(pick,notPick);
+        return dp[nums.size()-1];
     }
     
-    
-    
-    
     int rob(vector<int>& nums) {
-        
-        vector<int>dp(nums.size(),-1);
-        
-        return maxMoney(nums,nums.size()-1,dp);
+        int n = nums.size();
+        vector<int>dp(n,-1);
+        return maxMoney(nums,dp);
     }
 };
