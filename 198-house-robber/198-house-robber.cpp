@@ -1,34 +1,41 @@
 class Solution {
 public:
-    int rob(vector<int>& nums) {
-     
-        int n = nums.size();
-        
-        //int dp[n+1];
-        
-        //we got to know that from recursive tree
-        //rather than using dp array use variables to reduce the space complexity
-        //dp[0] = nums[0];
-        int pick=0;
-        
-        int prev = nums[0];
-        int prev2 = 0;
-        
-        for(int i=1;i<n;i++)
+    
+    int maxMoney(vector<int>& nums,int ind,vector<int>& dp)
+    {
+        if(ind==0)
         {
-         i > 1 ? pick = nums[i] + prev2 : pick = nums[i]; //+ dp[i-2] ll be 0 as i ind is -ve;
-        
-          int notPick = prev;
-            
-         int curr = max(pick,notPick);
-            
-         prev2 = prev;
-            
-         prev = curr;
-            
+            return nums[ind];
         }
         
-        return prev;
+        if(ind<0)
+        {
+            return 0;
+        }
         
+        if(dp[ind]!=-1)
+        {
+            return dp[ind];
+        }
+        
+        //if you put condition for index should be greater than 1
+        //then for array [1,2] it wont chose 2 simply it will chose 1
+        //bcoz of that condition
+        
+       int pick = nums[ind] + maxMoney(nums,ind-2,dp);
+        
+       int notPick = maxMoney(nums,ind-1,dp);
+        
+       return dp[ind] =max(pick,notPick);
+    }
+    
+    
+    
+    
+    int rob(vector<int>& nums) {
+        
+        vector<int>dp(nums.size(),-1);
+        
+        return maxMoney(nums,nums.size()-1,dp);
     }
 };
