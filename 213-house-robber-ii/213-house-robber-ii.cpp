@@ -1,49 +1,43 @@
 class Solution {
 public:
     
-    int maxMoney(int ind,vector<int>& nums,vector<int>& dp)
+    int maxMoney(vector<int>& nums,vector<int>&dp,int n)
     {
-        if(ind==0)
+        dp[0]=nums[0];
+        
+        for(int i=1;i<=n;i++)
         {
-            return nums[0];
+            int pick = nums[i];
+            if(i>1)
+            {
+                pick += dp[i-2];
+            }
+            
+            int notPick = dp[i-1];
+            
+            dp[i] = max(pick,notPick);
         }
         
-        if(ind<0)
-        {
-            return 0;
-        }
-        
-        if(dp[ind] != -1)
-        {
-            return dp[ind];
-        }
-        
-        int pick = nums[ind]+maxMoney(ind-2,nums,dp);
-        int notPick = maxMoney(ind-1,nums,dp);
-        
-        return dp[ind] = max(pick,notPick);
+        return dp[n];
     }
-    
-    int rob(vector<int>& nums) { 
+
+    int rob(vector<int>& nums) {
         
-        if(nums.size()==1)
+        int n = nums.size();
+        
+        if(n==1)
         {
             return nums[0];
         }
         
-        vector<int>dp(nums.size(),-1);
-        
-        //here we are not taking into consideration last element
-        //i.e. not including the last element of the array into operation
-        int LastInd = maxMoney(nums.size()-2,nums,dp);
-        //reversing the existing array now tha last element will be the first element
-        //so we are not including the last element of array into operation
-        reverse(nums.begin(),nums.end());
-        
+        vector<int>dp(n,-1);
+        int zeroInd = maxMoney(nums,dp,n-2);
+        cout<<zeroInd<<endl;
         fill(dp.begin(),dp.end(),-1);
+        reverse(nums.begin(),nums.end());
+        int lastInd = maxMoney(nums,dp,n-2);
+        cout<<lastInd;
         
-        int ZeroInd = maxMoney(nums.size()-2,nums,dp);
-        
-        return max(LastInd,ZeroInd);
+        return max(zeroInd,lastInd);
     }
 };
