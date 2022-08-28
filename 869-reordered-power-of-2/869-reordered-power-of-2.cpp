@@ -17,6 +17,8 @@ public:
         return digit;
     }
     
+   // https://leetcode.com/problems/reordered-power-of-2/discuss/1120216/Reordered-Power-of-2-or-Short-and-Easy-w-Explanation-or-Beats-100
+    
     bool reorderedPowerOf2(int n) {
         
         vector<int>digits = countDigits(n);
