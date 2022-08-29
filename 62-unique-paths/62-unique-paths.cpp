@@ -3,12 +3,12 @@ public:
     
     int totalWays(int row,int col,int m,int n,vector<vector<int>> & ans)
     {
-        if(row==m-1 && col==n-1)
+        if(row==0 && col==0)
         {
             return 1;
         }
         
-        if(row>=m || col>=n)
+        if(row<0 || col<0)
         {
            return 0;   
         }
@@ -18,15 +18,15 @@ public:
             return ans[row][col];
         }
         
-        int downMove = totalWays(row+1,col,m,n,ans);
-        int rightMove = totalWays(row,col+1,m,n,ans);
+        int upMove = totalWays(row-1,col,m,n,ans);
+        int leftMove = totalWays(row,col-1,m,n,ans);
         
-        return ans[row][col] = downMove+rightMove;
+        return ans[row][col] = upMove+leftMove;
     }
     
     
     int uniquePaths(int m, int n) {
         vector<vector<int>>ans(m,vector<int>(n,-1));
-       return totalWays(0,0,m,n,ans);
+       return totalWays(m-1,n-1,m,n,ans);
     }
 };
