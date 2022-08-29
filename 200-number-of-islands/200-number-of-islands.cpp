@@ -1,55 +1,39 @@
 class Solution {
 public:
     
-    void bfs(vector<vector<char>>& grid,int sr,int sc,int n,int m)
+    void dfs(vector<vector<char>>& grid,int n,int m,int row,int col)
     {
-        queue<pair<int,int>>q;
-        q.push({sr,sc});
-        
-        while(!q.empty())
+        if(row>=n || row<0 || col>=m || col<0 || grid[row][col]=='0')
         {
-            auto pr = q.front();
-            q.pop();
-            
-            int currentRow = pr.first;
-            int currentCol = pr.second;
-            
-   if(currentRow<0 || currentRow >=n || currentCol<0 || currentCol>=m || 
-      grid[currentRow][currentCol]=='0')
-      {
-               continue;
-      }
-            
-        grid[currentRow][currentCol] = '0';
-        q.push({currentRow+1,currentCol});
-        q.push({currentRow-1,currentCol});
-        q.push({currentRow,currentCol+1});
-        q.push({currentRow,currentCol-1});
-            
-            
+            return ;
         }
+        
+        grid[row][col]='0';
+        dfs(grid,n,m,row+1,col);
+        dfs(grid,n,m,row-1,col);
+        dfs(grid,n,m,row,col+1);
+        dfs(grid,n,m,row,col-1);
     }
     
     
     int numIslands(vector<vector<char>>& grid) {
+     
+         int n = grid.size();
+         int m = grid[0].size();
+         int islands=0;
         
-        int n = grid.size();
-        int m = grid[0].size();
-        int answer=0;
+         for(int i=0;i<n;i++)
+         {
+             for(int j=0;j<m;j++)
+             {
+                 if(grid[i][j]=='1')
+                 {
+                     dfs(grid,n,m,i,j);
+                     islands++;
+                 }
+             }
+         }
         
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                if(grid[i][j]=='1')
-                {
-                    answer += 1;
-                    
-                    bfs(grid,i,j,n,m);
-                }
-            }
-        }
-        
-        return answer;
+        return islands;
     }
 };
