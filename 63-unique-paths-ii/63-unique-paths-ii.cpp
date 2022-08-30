@@ -41,6 +41,9 @@ public:
         {
             for(int j=0;j<m;j++)
             {
+                
+                //here itself can check if dp[i][j]==1 then 
+                 //directly store dp[i][j]=0 as it is a obstacle
                 if(i==0 && j==0 )
                 {
                     if(obstacleGrid[i][j]==0)
