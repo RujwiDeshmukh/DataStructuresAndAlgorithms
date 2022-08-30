@@ -35,9 +35,50 @@ public:
         int n = obstacleGrid.size();
         int m = obstacleGrid[0].size();
         
-        vector<vector<int>>dp(n,vector<int>(m,-1));
+        vector<vector<int>>dp(n,vector<int>(m,0));
         
-       return uniquePath(n-1,m-1,n,m,obstacleGrid,dp);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(i==0 && j==0 )
+                {
+                    if(obstacleGrid[i][j]==0)
+                    {
+                       dp[i][j]=1;
+                    }
+                }
+                else
+                {
+                   int left =0;
+                    int right=0;
+                    
+                    if(i>0)
+                    {
+                        if(obstacleGrid[i][j]==0)
+                        {
+                           left = dp[i-1][j];
+                        }
+                    }
+                    
+                    
+                    if(j>0)
+                    {
+                        if(obstacleGrid[i][j]==0)
+                        {
+                           right = dp[i][j-1];
+                        }
+                    }
+                    
+                    dp[i][j] = left+right;
+                }
+                
+            }
+        }
+        
+       //return uniquePath(n-1,m-1,n,m,obstacleGrid,dp);
+        
+        return dp[n-1][m-1];
         
     }
 };
