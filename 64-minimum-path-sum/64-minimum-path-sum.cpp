@@ -33,8 +33,34 @@ public:
         int n = grid.size();
         int m = grid[0].size();
         
-        vector<vector<int>>dp(n,vector<int>(m,-1));
+        vector<vector<int>>dp(n,vector<int>(m,0));
         
-        return minimumPath(n-1,m-1,n,m,grid,dp);
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(i==0 && j==0)
+                {
+                    dp[i][j]=grid[i][j];
+                }
+                else
+                {
+                    int up = 999999;
+                    if(i>0)
+                    {
+                      up  = grid[i][j]+ dp[i-1][j];
+                    }
+                       
+                    int left=999999;
+                    if(j>0)
+                    {
+                       left = grid[i][j] + dp[i][j-1];
+                    }
+                    dp[i][j] = min(up,left);
+                }
+            }
+        }
+        
+        return dp[n-1][m-1];
     }
 };
