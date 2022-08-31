@@ -1,16 +1,19 @@
 class Solution {
 public:
-    int dp[202][202];
-    int minSum(vector<vector<int>>& grid,int row,int col,int m,int n)
+    
+    int minimumPath(int row,int col,int n ,int m, vector<vector<int>>& grid,     vector<vector<int>>& dp)
     {
-        if(row >= m || col >= n)
-        {
-            return 1000;
-        }
-        
-        if(row==m-1 && col==n-1)
+        if(row==0 && col==0)
         {
             return grid[row][col];
+        }
+        
+        //we dont want to include this condition in our answer
+        //so we simply return the large value as we want to take the minimum
+        
+        if(row<0 || col<0)
+        {
+            return 9999999;
         }
         
         if(dp[row][col] != -1)
@@ -18,63 +21,20 @@ public:
             return dp[row][col];
         }
         
-        int rightMove = grid[row][col] + minSum(grid,row,col+1,m,n);
-        int downMove = grid[row][col] + minSum(grid,row+1,col,m,n);
+        int up = grid[row][col] + minimumPath(row-1,col,n,m,grid,dp);
+        int left = grid[row][col] + minimumPath(row,col-1,n,m,grid,dp);
         
-        return dp[row][col] = min(rightMove,downMove);
+        return dp[row][col] = min(up,left);
     }
     
+    
     int minPathSum(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<int>prev(n+1,0);
         
-        //memset(dp,-1,sizeof(dp));
-        //return minSum(grid,0,0,m,n);
+        int n = grid.size();
+        int m = grid[0].size();
         
-        for(int i=0;i<m;i++)
-        {
-            
-            vector<int>curr(n+1,0);
-            
-            for(int j=0;j<n;j++)
-            {
-                if(i==0 && j==0)
-                {
-                    curr[j]=grid[i][j];
-                }
-                else
-                {
-                    int up = grid[i][j];
-                    if(i>0)
-                    {
-                        up += prev[j];
-                    }
-                    else
-                    {
-                        up += 1e9;
-                    }
-                    
-                    int left = grid[i][j];
-                    
-                    if(j>0)
-                    {
-                        left += curr[j-1];
-                    }
-                    else
-                    {
-                        left += 1e+9;
-                    }
-                    
-                    curr[j] = min(up,left);
-                }
-            }
-            
-            prev = curr;
-        }
+        vector<vector<int>>dp(n,vector<int>(m,-1));
         
-        //cout<<dp[n-3][m-3];
-        
-        return prev[n-1];
+        return minimumPath(n-1,m-1,n,m,grid,dp);
     }
 };
