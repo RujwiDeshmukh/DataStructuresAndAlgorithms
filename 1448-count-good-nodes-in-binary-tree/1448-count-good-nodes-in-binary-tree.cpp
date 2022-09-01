@@ -11,30 +11,31 @@
  */
 class Solution {
 public:
-    //performing preorder as we want to keep track of maximum value till now
-    int countGoodNodes(TreeNode* root,int maxi,int& count)
+    
+    void countNodes(TreeNode* root,int value,int & count)
     {
         if(root==NULL)
         {
-            return 0;
+            return ;
         }
         
-        if(root->val >= maxi)
+        if(root->val >= value)
         {
+            value = max(value,root->val);
             count++;
-            maxi = max(maxi,root->val);
         }
         
-        countGoodNodes(root->left,maxi,count);
-        countGoodNodes(root->right,maxi,count);
+        countNodes(root->left,value,count);
+        countNodes(root->right,value,count);
         
-        return count;
     }
     
-    int goodNodes(TreeNode* root) {
     
-    int maxi =INT_MIN;
+    int goodNodes(TreeNode* root) {
+        
         int count=0;
-       return countGoodNodes(root,maxi,count);
+        countNodes(root,root->val,count);
+        return count;
+        
     }
 };
