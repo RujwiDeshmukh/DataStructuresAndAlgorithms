@@ -11,42 +11,40 @@
  */
 class Solution {
 public:
+    
+    void dfs(int level,TreeNode* root,map<int,vector<int>>& mp)
+    {
+        if(root == NULL)
+        {
+            return ;
+        }
+        
+        mp[level].push_back(root->val);
+        
+        dfs(level+1,root->left,mp);
+        dfs(level+1,root->right,mp);
+    }
+    
     vector<double> averageOfLevels(TreeNode* root) {
-           
         vector<double>ans;
+        map<int,vector<int>>mp;
+        dfs(0,root,mp);
         
-            queue<TreeNode*>q;
-            q.push(root);
-            int sum=0;
-            int count=0;
-        
-           while(!q.empty())
-           {
-               double sum = 0;
-               int n = q.size();
-               
-               for(int i=0;i<n;i++)
-               {
-                    TreeNode* node =  q.front();
-                    q.pop();
-                   
-                    sum += node->val;
-                   
-                    if(node->left != NULL)
-                    {
-                        q.push(node->left);
-                    }
-                   
-                   if(node->right != NULL)
-                    {
-                        q.push(node->right);
-                    }
-               }
-               
-               double avg = (double)sum/n;
-               ans.push_back(avg);
-               
-           }
+        for(auto m : mp)
+        {
+            vector<int>num = m.second;
+            int size = num.size();
+            cout<<size<<endl;
+            double sum=0;
+            
+            for(int i=0;i<size;i++)
+            {
+                sum += num[i];
+            }
+            
+            double avg = (double)sum/size;
+            ans.push_back(avg);
+        }
         
           return ans;
     }
