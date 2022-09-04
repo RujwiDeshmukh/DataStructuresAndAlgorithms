@@ -13,61 +13,50 @@ class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         
-          queue<pair<TreeNode*,pair<int,int>>>q;
-          q.push({root,{0,0}});
-          
-          map<int,map<int,multiset<int>>>mp;
+       /* queue<TreeNode*>q;
+        q.push(root); */
+      //  it wont work as we need to maintain level and vertcle for node
         
-          while(!q.empty())
-          {
-              auto curr = q.front();
-              q.pop();
-              
-              TreeNode* node = curr.first;
-              int level = curr.second.first;
-              int verticle = curr.second.second;
-              
-              mp[verticle][level].insert(node->val);
-              
-              if(node->left != NULL)
-              {
-                  q.push({node->left,{level+1,verticle-1}});
-              }
-              
-              if(node->right != NULL)
-              {
-                  q.push({node->right,{level+1,verticle+1}});
-              }
-          }
+        queue<pair<TreeNode*,pair<int,int>>>q;
+        q.push({root,{0,0}});
         
-         vector<vector<int>>ans;
+        map<int,map<int,multiset<int>>>mp;
         
-   /*      map<int,map<int,multiset<int>>>::iterator it;
-        
-        for(it = mp.begin(); it != mp.end();it++)
+        while(!q.empty())
         {
-              vector<int>col;
+            auto value = q.front();
+            q.pop();
             
-            multiset<int>::iterator ite;
+            TreeNode* node = value.first;
+            int level = value.second.first;
+            int verticle = value.second.second;
             
-      for(ite = ((it->second)->second).begin(); ite != ((it->second)->second).end(); ite++)
-        {
-           col.insert(col.end(),ite.begin(),ite.end());    
+            mp[verticle][level].insert(node->val);
+            
+            if(node->left != NULL)
+            {
+                q.push({node->left,{level+1,verticle-1}});
+            }
+            
+            if(node->right != NULL)
+            {
+                q.push({node->right,{level+1,verticle+1}});
+            }
         }
-             ans.push_back(col);
-        }  */
         
-         for(auto p : mp)
-          {
-              vector<int>col;
-              for(auto q : p.second)
-              {
-                  col.insert(col.end(),q.second.begin(),q.second.end());
-              }
-              
-              ans.push_back(col);
-          }  
+        vector<vector<int>>res;
         
-        return ans;
+        for(auto m : mp)
+        {
+            vector<int>ans;
+            for(auto st : m.second)
+            {
+              ans.insert(ans.end(),st.second.begin(),st.second.end()); 
+            }
+            
+            res.push_back(ans);
+        }
+        
+        return res;
     }
 };
