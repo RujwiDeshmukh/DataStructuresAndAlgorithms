@@ -22,39 +22,35 @@ class Solution {
 public:
     vector<vector<int>> levelOrder(Node* root) {
         
-        vector<vector<int>>ans;
-        
-        if(root == NULL)
-        {
-            return ans;
-        }
-        queue<Node *>q;
+        queue<Node*>q;
         q.push(root);
+        vector<vector<int>>res;
         
+        if(root==NULL)
+        {
+            return res;
+        }
+                
         while(!q.empty())
         {
-            int s=q.size();
-            vector<int>v;
+            int size=q.size();
+            vector<int>ans;
             
-            //TC => O(n) 
-            //as we are processing all nodes of tree only once
-            
-            for(int i=0;i<s;i++)
+            for(int i=0;i<size;i++)
             {
-                Node *temp = q.front();
-                q.pop();
-                v.push_back(temp->val);
-                
-                for(Node *t : temp->children)
+                 Node* node = q.front();
+                  q.pop();
+                for(auto child : node->children)
                 {
-                    q.push(t);
-                }
+                  q.push(child);   
+                 }
+                
+                ans.push_back(node->val);
             }
             
-            ans.push_back(v);
+            res.push_back(ans);
         }
         
-        return ans;
-        
+        return res;
     }
 };
