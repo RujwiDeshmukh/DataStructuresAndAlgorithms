@@ -1,37 +1,32 @@
 class Solution {
 public:
     
-    int dfs(int i,int j,int n,vector<vector<int>>& triangle,vector<vector<int>>& memo)
+    int minimumSum(int row,int col,vector<vector<int>>& triangle,vector<vector<int>>& dp)
     {
-        //as we are adding values if return INT_MAX
-        //by seeing that we have to calculate the minimum value
-        //then it will row wrong as while returing we are adding values
-        //so it give the overflow condition so we need to simply return 0
-        
-        if(i==n)
+        if(row==triangle.size()-1)
         {
-            return 0;
+            return triangle[row][col];
         }
         
-        if(memo[i][j] != -1)
+        if(dp[row][col] != -1)
         {
-            return memo[i][j];
+            return dp[row][col];
         }
         
-        int leftPart = triangle[i][j] + dfs(i+1,j,n,triangle,memo);
-        int rightPart = triangle[i][j] + dfs(i+1,j+1,n,triangle,memo);
+        //for diagonal condition it wont cross as we are stopping for row==n-1
         
-        return memo[i][j] = min(leftPart,rightPart);
+        int down = triangle[row][col]+minimumSum(row+1,col,triangle,dp);
+        int diag = triangle[row][col]+minimumSum(row+1,col+1,triangle,dp);
+        
+        return dp[row][col] = min(down,diag);
     }
-    
     
     int minimumTotal(vector<vector<int>>& triangle) {
         
         int n = triangle.size();
-        vector<vector<int>>memo(n, vector<int>(n,-1));
         
-        return dfs(0,0,n,triangle,memo);
+        vector<vector<int>>dp(n,vector<int>(n,-1));
         
-        //https://leetcode.com/problems/triangle/discuss/2146264/C%2B%2B-Python-Simple-Solution-w-Explanation-or-Recursion-greater-DP
+        return minimumSum(0,0,triangle,dp);
     }
 };
