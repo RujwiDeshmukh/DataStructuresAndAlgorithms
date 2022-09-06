@@ -11,23 +11,18 @@
  */
 class Solution {
 public:
-    TreeNode* pruneTree(TreeNode* root) {
+    
+    //need to do postorder
+    
+    TreeNode* pruneTree(TreeNode* root) {        
         
-        //here we dont have any problem with inbetween node having zero value
-        //we are checking those nodes only having value zero and both childs as NULL
-        
-        if(root==NULL)
+          if(root==NULL)
         {
             return NULL;
         }
         
-        //here we are performing postorder as after zero , one can be encountered
-        
-        
         root->left = pruneTree(root->left);
         root->right = pruneTree(root->right);
-        
-        //now process the node
         
         if(root->val==0 && root->left==NULL && root->right==NULL)
         {
