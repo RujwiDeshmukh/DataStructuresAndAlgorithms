@@ -8,10 +8,14 @@ public:
         int n = grid.size();
         int m = grid[0].size();
         
-       vector<vector<vector<int>>>dp(n,vector<vector<int>>(m, vector<int>(m,INT_MIN)));
+        //3D --> 2D dp as only col parameters are changing c1 and c2
+        
+     //  vector<vector<vector<int>>>dp(n,vector<vector<int>>(m, vector<int>(m,INT_MIN)));
         
        // return maxCherries(0,0,m-1,n,m,grid);
         
+        vector<vector<int>>front(m,vector<int>(m,0));
+       
         
         
         //write base case first
@@ -22,11 +26,11 @@ public:
             {
                 if(j1==j2)
                 {
-                    dp[n-1][j1][j2] = grid[n-1][j1];
+                    front[j1][j2] = grid[n-1][j1];
                 }
                 else
                 {
-                    dp[n-1][j1][j2] = grid[n-1][j1]+grid[n-1][j2];
+                    front[j1][j2] = grid[n-1][j1]+grid[n-1][j2];
                 }
             }
         }
@@ -35,6 +39,7 @@ public:
         
         for(int i=n-2;i>=0;i--)
         {
+             vector<vector<int>>curr(m,vector<int>(m,0));
             for(int j1=0;j1<m;j1++)
             {
                 for(int j2=0;j2<m;j2++)
@@ -58,16 +63,18 @@ public:
                         {
                              if(j1+c1 >= 0 && j1+c1 < m && j2+c2 >= 0 && j2+c2< m)
                              {
-                                 maxi=max(maxi,dp[i+1][j1+c1][j2+c2]);
+                                 maxi=max(maxi,front[j1+c1][j2+c2]);
                              }
                        }
                   }  
                     
-                    dp[i][j1][j2]=maxi+cherry;
+                    curr[j1][j2]=maxi+cherry;
                 }
             }
+            
+            front=curr;
         }
         
-        return dp[0][0][m-1];
+        return front[0][m-1];
     }
 };
