@@ -10,9 +10,11 @@ public:
     {
         if(a[0] == b[0])
         {
+            //condition for ascending order
             return a[1] < b[1];
         }
         
+        //condition for descending order
         return a[0] > b[0];
     }
     
@@ -23,10 +25,11 @@ public:
         int ans=0;
         int maxi=INT_MIN;
         
-        for(int i=0;i<properties.size();i++)
+     /*   for(int i=0;i<properties.size();i++)
         {
             cout<<properties[i][0]<<" "<<properties[i][1]<<endl;
         }
+        */
         
         for(int i=0;i<properties.size();i++)
         {
