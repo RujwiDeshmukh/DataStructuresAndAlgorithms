@@ -1,7 +1,6 @@
 class Solution {
 public:
     bool validUtf8(vector<int>& data) {
-        
         int remaining=0;
         for(int i=0;i<data.size();i++)
         {
@@ -42,6 +41,10 @@ public:
         }
         
         return remaining==0;
+        
+        //https://leetcode.com/problems/utf-8-validation/discuss/87462/Concise-C%2B%2B-implementation
+        //https://leetcode.com/problems/utf-8-validation/discuss/2568936/C%2B%2B-or-Bit-Manipulation-Approach
+        //https://leetcode.com/problems/utf-8-validation/discuss/2568917/LeetCode-The-Hard-Way-Explained-Line-By-Line
         
     }
 };
