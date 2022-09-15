@@ -1,39 +1,56 @@
 class Solution {
 public:
     
-    bool partitionArray(int idx,vector<int>& nums,int target,vector<vector<int>>& dp)
+    int partition(int ind,vector<int>& nums,int target,vector<vector<int>>& dp)
     {
-        if(target == 0)  { return true; }
+        if(target==0)
+        {
+            return 1;
+        }
         
-        if(idx==0) {
-            if(target == nums[0]) { return true; }
-            else { return false; } }
+        if(ind==0)
+        {
+            return (target==nums[0]);
+        }
         
-        if(dp[idx][target] != -1)   {  return  dp[idx][target]; }
+        if(dp[ind][target] != -1)
+        {
+            return dp[ind][target];
+        }
         
-        bool notTake = partitionArray(idx-1,nums,target,dp);
-        bool take = false;
+        int notTake = partition(ind-1,nums,target,dp);
         
-        if(nums[idx] <= target) {
-            take = partitionArray(idx-1,nums,target-nums[idx],dp); }
-         
-        return dp[idx][target] = (take or notTake);
-    }
+        int take = 0;
+        
+        if(nums[ind] <= target)
+        {
+            take = partition(ind-1,nums,target-nums[ind],dp);
+        }
+        
+        return dp[ind][target] = take or notTake;
+    } 
     
     bool canPartition(vector<int>& nums) {
         
         int totSum=0;
-        int n = nums.size();
         
-        for(int i=0;i<n;i++)  { totSum += nums[i]; }
+        for(int i=0;i<nums.size();i++)
+        {
+            totSum += nums[i];
+        }
         
-        if(totSum%2==1)  { return false; }
+        //totSum is odd then it wont be possible to divide the array
+        //into 2 parts
+        if(totSum%2==1)
+        {
+            return false;
+        }
         
         int target = totSum/2;
         
-        vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
-    
-       return partitionArray(n-1,nums,target,dp);
+        vector<vector<int>>dp(nums.size()+5,vector<int>(target+5,-1));
+        
+        return partition(nums.size()-1,nums,target,dp);
         
     }
 };
