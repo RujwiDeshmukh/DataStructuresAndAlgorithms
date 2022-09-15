@@ -1,56 +1,59 @@
 class Solution {
 public:
-    
-    int partition(int ind,vector<int>& nums,int target,vector<vector<int>>& dp)
-    {
-        if(target==0)
-        {
-            return 1;
-        }
-        
-        if(ind==0)
-        {
-            return (target==nums[0]);
-        }
-        
-        if(dp[ind][target] != -1)
-        {
-            return dp[ind][target];
-        }
-        
-        int notTake = partition(ind-1,nums,target,dp);
-        
-        int take = 0;
-        
-        if(nums[ind] <= target)
-        {
-            take = partition(ind-1,nums,target-nums[ind],dp);
-        }
-        
-        return dp[ind][target] = take or notTake;
-    } 
-    
     bool canPartition(vector<int>& nums) {
         
+        int n = nums.size();
         int totSum=0;
         
-        for(int i=0;i<nums.size();i++)
+        if(n==1)
+        {
+            return false;
+        }
+        
+        for(int i=0;i<n;i++)
         {
             totSum += nums[i];
         }
         
-        //totSum is odd then it wont be possible to divide the array
-        //into 2 parts
-        if(totSum%2==1)
+        if(totSum%2 == 1)
         {
             return false;
         }
         
         int target = totSum/2;
         
-        vector<vector<int>>dp(nums.size()+5,vector<int>(target+5,-1));
+        vector<vector<bool>>dp(n+5,vector<bool>(target+5,false));
         
-        return partition(nums.size()-1,nums,target,dp);
+        for(int i=0;i<n;i++)
+        {
+            dp[i][0]=true;
+        }
+        
+        //as target is 50 and our first element here is 99 so
+        //it will give the error so every time target should be 
+        //equal to nums[0] or always greatre than zero
+        if(target >= nums[0])
+        {
+            dp[0][nums[0]]=true;
+        }
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<=target;j++)
+            {
+                bool notTake = dp[i-1][j];
+                bool take = false;
+                
+                if(nums[i] <= j)
+                {
+                    take = dp[i-1][j-nums[i]];
+                }
+                
+                dp[i][j] = take | notTake;
+            }
+        }
+        
+        return dp[n-1][target];
         
     }
 };
