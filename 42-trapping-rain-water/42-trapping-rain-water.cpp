@@ -3,28 +3,41 @@ public:
     int trap(vector<int>& arr) {
         
         int n = arr.size();
-        int totWater = 0;
+        int left=0;
+        int right=n-1;
+        int ans=0;
+        int leftMax=0, rightMax=0;
         
-        vector<int>leftMax(n,0), rightMax(n,0);
-        
-        leftMax[0] = arr[0];
-        rightMax[n-1] = arr[n-1];
-        
-        for(int i=1;i<n;i++)
+        while(left<=right)
         {
-            leftMax[i] = max(leftMax[i-1],arr[i]);
+            if(arr[left] <= arr[right])
+            {             
+                 if(arr[left] >= leftMax)
+                 {
+                     leftMax = arr[left];
+                 }
+                else
+                {
+                    ans += leftMax - arr[left];
+                }
+                
+                left++;
+            }
+            else // (arr[left] > arr[right])
+            {
+                if(arr[right] > rightMax)
+                {
+                    rightMax = arr[right];
+                }
+                else
+                {
+                    ans += rightMax - arr[right];
+                }
+                
+                right--;
+            }
         }
         
-        for(int i=n-2;i>=0;i--)
-        {
-            rightMax[i] = max(rightMax[i+1],arr[i]);
-        }
-        
-          for(int i=0;i<n;i++)
-          {
-              totWater += min(leftMax[i],rightMax[i])-arr[i];
-          }
-        
-        return totWater;
+        return ans;
     }
 };
