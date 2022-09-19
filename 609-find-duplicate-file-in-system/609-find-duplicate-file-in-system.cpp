@@ -5,6 +5,10 @@ public:
         unordered_map<string,vector<string>>mp;
         vector<vector<string>>ans;
         
+       // https://leetcode.com/problems/find-duplicate-file-in-system/discuss/1215522/Easy-Solutions-w-Explanation-Using-HashMap-or-C%2B%2B-custom-parsing-and-stringstream
+        
+        //https://leetcode.com/problems/find-duplicate-file-in-system/discuss/104123/C%2B%2B-clean-solution-answers-to-follow-up
+        
         for(auto &path : paths)
         {
             int i=0,j;
