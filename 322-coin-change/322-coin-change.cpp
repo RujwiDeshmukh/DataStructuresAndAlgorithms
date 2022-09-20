@@ -1,48 +1,49 @@
 class Solution {
 public:
     
-    int recurCoinChange(vector<int>& coins,int idx,int amount,vector<vector<int>>& dp)
+    int minCoins(int ind,vector<int>& coins,int amount, vector<vector<int>>& dp)
     {
-        if(idx >= coins.size())
+        
+        if(ind==0)
         {
-            return 1000;
+            if(amount%coins[0]==0)
+            {
+                return amount/coins[0];
+            }
+                return 1e9+6;
         }
         
-        if(amount==0)
+        if(dp[ind][amount] != -1)
         {
-            return 0;
+            return dp[ind][amount];
         }
         
-        if(dp[idx][amount] != -1)
+        int notTake = minCoins(ind-1,coins,amount,dp);
+        
+        int take = 1e9+6;
+        
+        if(coins[ind] <= amount)
         {
-            return dp[idx][amount];
+            take = 1+minCoins(ind,coins,amount-coins[ind],dp);
         }
         
-        int consider=1000;
-        
-        //using this condition as we are substracting values from amount
-        //and final result can be -ve
-        if(coins[idx] <= amount)
-        {
-            consider = 1+recurCoinChange(coins,idx,amount-coins[idx],dp);
-        }
-        
-        int notConsider = recurCoinChange(coins,idx+1,amount,dp);
-        
-        return dp[idx][amount] = min(consider,notConsider);
-        
+        return dp[ind][amount] = min(notTake,take);
     }
     
     
     int coinChange(vector<int>& coins, int amount) {
+         
+          int n = coins.size();
         
-        vector<vector<int>>dp(coins.size()+5, vector<int>(amount+5,-1));
+          vector<vector<int>>dp(n,vector<int>(amount+1,-1));
         
-        int ans = recurCoinChange(coins,0,amount,dp);
+          int ans = minCoins(n-1,coins,amount,dp);
         
-        if(ans==1000)   return -1;
+          if(ans == 1e9+6)
+          {
+              return -1;
+          }
         
         return ans;
-        
     }
 };
