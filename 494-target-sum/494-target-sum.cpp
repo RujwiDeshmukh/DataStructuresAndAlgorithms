@@ -34,15 +34,15 @@ public:
         return dp[ind][tar] = take+notTake;
     }
      
-    int findTargetSumWays(vector<int>& nums, int tar) {
+    int findTargetSumWays(vector<int>& arr, int tar) {
         
         int totSum = 0;
         
-        int n = nums.size();
+        int n = arr.size();
         
         for(int i=0;i<n;i++)
         {
-            totSum += nums[i];
+            totSum += arr[i];
         }
         
         if(totSum-tar<0 || (totSum-tar)%2==1)
@@ -54,9 +54,39 @@ public:
         
         cout<<target<<endl;
         
-        vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+        vector<vector<int>>dp(n+1,vector<int>(target+1,0));
         
-        return findWays(n-1,nums,target,dp);
+        if(arr[0]==0)
+        {
+           dp[0][0] = 2;    
+        }
+        else
+        {
+            dp[0][0] = 1;
+            //target 0 at index 0 means only not pick will be true
+            //as nums[0] is not equal to 0
+        }
         
+        if(arr[0] != 0 && arr[0] <= target)
+        {
+            dp[0][arr[0]] = 1;
+        }
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<=target;j++)
+            {
+                int notTake = dp[i-1][j];
+                int take = 0;
+                if(arr[i] <= j)
+                {
+                    take =  dp[i-1][j-arr[i]];
+                }
+                
+                dp[i][j] = take+notTake;
+            }
+        }
+        
+        return dp[n-1][target];
     }
 };
