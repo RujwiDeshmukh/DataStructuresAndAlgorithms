@@ -1,7 +1,7 @@
 class UndergroundSystem {
 public:
     
-    unordered_map<int, pair<string,int>>checkin;
+     unordered_map<int, pair<string,int>>checkin;
     unordered_map<string, pair<double,int>> average;
    // https://leetcode.com/problems/design-underground-system/discuss/1977950/C%2B%2B-oror-2-Map-Easy-Sol-oror-YT-Link-To-Understand-Logic
     UndergroundSystem() {
@@ -26,6 +26,7 @@ public:
         double count = average[station].second;
         return totalTime/count;
     }
+   
 };
 
 /**
