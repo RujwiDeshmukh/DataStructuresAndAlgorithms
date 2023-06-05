@@ -12,7 +12,7 @@ public:
                   return false;
             }
             
-            //(x2-x1)/(x-x1) = (y2-y1)/(y-y1)
+            //(x2-x1)/(x1-x0) = (y2-y1)/(y1-y0)
         }
         
         return true;
