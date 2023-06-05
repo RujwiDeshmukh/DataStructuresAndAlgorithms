@@ -7,7 +7,7 @@ public:
         int n = coor.size();
         for(int i=2;i<n;i++)
         {
-            if((coor[i][0]-coor[0][0])*ydiff != (coor[i][1]-coor[0][1])*xdiff)
+            if((coor[i][0]-coor[1][0])*ydiff != (coor[i][1]-coor[1][1])*xdiff)
             {
                   return false;
             }
